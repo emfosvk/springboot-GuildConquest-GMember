@@ -1,6 +1,6 @@
 buildscript {
     ext{
-        springBootVertion = '2.1.7.RELEASE'
+        springBootVertion = '2.1.9.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -24,12 +24,34 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    //Test 기본 툴
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    //Springboot 기본
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+
+    //Spring mustache
+    compile('org.springframework.boot:spring-boot-starter-mustache')
+
+    //Springboot에서 사용하는 oauth2 모듈
+    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+
+    // Session을 DB로 저장사용하기 위한 모듈등록
+    compile('org.springframework.session:spring-session-jdbc')
+
+    // 소스내 사용
+    compile('org.projectlombok:lombok')
+
+    // Spring Data JPA
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('com.h2database:h2')
+
+
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
