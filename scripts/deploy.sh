@@ -11,7 +11,7 @@ cp $REPOSITORY/zip/*.jar $REPOSITORY/
 echo "> [01 - E N D] Build File Copy"
 echo "> [02 - START] Find Service PID activating now"
 
-CURRENT_PID=$(pgrep -fl springboot-GuildConquest-GMember | grep jar | awk '{print $1}')
+CURRENT_PID=$(pgrep -fl springboot-GuildConquest-GMember | awk '{print $1}')
 
 echo "> 현재기동중인 PID : $CURRENT_PID"
 
