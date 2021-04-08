@@ -6,19 +6,19 @@ PROJECT_NAME=springboot-GuildConquest-GMember
 echo "---------------------------------- [START] Deploy ----------------------------------"
 echo "> [01 - START] Build File Copy"
 
-cp $REPOSITORY/zip/*.jar $REPOSITORY
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 echo "> [01 - E N D] Build File Copy"
 echo "> [02 - START] Find Service PID activating now"
 
-CURRENT_PID = $(pgrep -fl springboot-GuildConquest-GMember | grep | jar | awl '{print $1}')
+CURRENT_PID= $(pgrep -fl springboot-GuildConquest-GMember | grep jar | awk '{print $1}')
 echo "> 현재기동중인 PID : $CURRENT_PID"
 
 echo "> [02 - E N D] Build Project"
 echo "> [03 - START] Shutdown Project"
 
 if [ -z "$CURRENT_PID" ]; then
-        echo "> 중지작업 pass"
+        echo "> 실행중 프로세스 발견 못함. 중지작업 pass"
 else
         echo "> kill -15 $CURRENT_PID"
         kill -15 $CURRENT_PID
@@ -44,7 +44,7 @@ echo "> Jar Excute : $JAR_NAME"
 nohup java -jar \
         -Dspring.config.location=classpath:/application.properties,classpath:/application-aws.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties \
         -Dspring.profiles.active=aws \
-        $REPOSITORY/$JAR_NAME 2>&1 &
+        $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
 echo "> [05 - E N D] Startup Project"
 
