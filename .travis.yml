@@ -20,3 +20,18 @@ notifications:
     recipients:
       - emfosvk@gmail.com
 
+before_deploy:
+  - zip -r springboot-GuildConquest-GMember *
+  - mkdir -p deploy
+  - mv springboot-GuildConquest-GMember.zip deploy/springboot-GuildConquest-GMember.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY #Trivis Repo Settings에 설정되어 있음.
+    secret_access_key: $AWS_SECRET_KEY #Trivis Repo Settings에 설정되어 있음.
+    bucket: kingsraid-guildconquest-build #s3 버킷 명
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl : private #zip 파일 접근을 private로 설정
+    local_dir: deploy
+    wait-until-deployed: true
