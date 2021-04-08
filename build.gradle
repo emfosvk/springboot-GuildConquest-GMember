@@ -1,3 +1,5 @@
+version '0.0.1-SNAPSHOT'
+
 buildscript {
     ext{
         springBootVertion = '2.1.9.RELEASE'
