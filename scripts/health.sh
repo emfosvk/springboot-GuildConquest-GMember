@@ -26,7 +26,7 @@ do
   if [ ${UP_COUNT} -ge 1 ]
   then
     echo "> health check Success"
-    switch proxy
+    switch_proxy
     break
   else
     echo "> health check Cannot find"
