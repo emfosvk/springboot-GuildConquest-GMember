@@ -10,7 +10,7 @@ function switch_proxy(){
 
   echo "> 전환될 PORT : $IDLE_PORT"
   echo "> PORT 전환"
-  echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service_url.inc
+  echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 
   echo "> nginx Restart"
   sudo service nginx reload

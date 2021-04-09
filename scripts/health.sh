@@ -30,7 +30,7 @@ do
     break
   else
     echo "> health check Cannot find"
-    echo "> health check : ${RESPONCE}"
+    echo "> health check : ${RESPONSE}"
   fi
 
   if [ ${RETRY_COUNT} -eq 10 ]
