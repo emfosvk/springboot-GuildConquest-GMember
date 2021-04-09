@@ -22,7 +22,7 @@ echo "실행권한 추가 = $JAR_NAME"
 echo "실행권한 추가 / chmod +x $JAR_NAME"
 chmod +x $JAR_NAME
 
-echo "JAR 실행 = $JAR_NAME"
+echo "JAR 실행 = $JAR_NAME / profile : $IDLE_PROFILE"
 
 IDLE_PROFILE=$(find_idle_profile)
 

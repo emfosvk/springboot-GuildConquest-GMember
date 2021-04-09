@@ -20,11 +20,11 @@ for RETRY_COUNT in {1..10}
 do
   echo "> health check Try ${RETRY_COUNT}/10"
 
-  RESPONCE=$(curl -s http://localhost:$IDLE_PORT/profile)
-  UP_COUNT=$(echo ${RESPONCE} | grep 'aws' | wc -l)
+  RESPONSE=$(curl -s http://localhost:${IDLE_PORT}/profile)
+  UP_COUNT=$(echo ${RESPONSE} | grep 'aws' | wc -l)
 
-  if[${UP_COUNT} -ge 1]
-  then  # $up_count >= 1 ("aws 문자열이 있는지 확인")
+  if [ ${UP_COUNT} -ge 1 ]
+  then
     echo "> health check Success"
     switch proxy
     break
@@ -33,7 +33,7 @@ do
     echo "> health check : ${RESPONCE}"
   fi
 
-  if [${RETRY_COUNT} -eq 10]
+  if [ ${RETRY_COUNT} -eq 10 ]
   then
      echo "> health check Fail"
      echo "> nginx 연결 없이 배포 종료"
