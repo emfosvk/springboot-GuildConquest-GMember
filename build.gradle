@@ -54,9 +54,7 @@ dependencies {
     //MariaDB 드라이버 추가
     compile("org.mariadb.jdbc:mariadb-java-client")
 
+    //Mybatis 추가
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2')
 
 }
-
-//test {
-//    useJUnitPlatform()
-//}

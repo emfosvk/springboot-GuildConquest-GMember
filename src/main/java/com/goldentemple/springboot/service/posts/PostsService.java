@@ -1,6 +1,7 @@
 package com.goldentemple.springboot.service.posts;
 
 import com.goldentemple.springboot.domain.posts.Posts;
+import com.goldentemple.springboot.domain.posts.Posts00Mapper;
 import com.goldentemple.springboot.domain.posts.PostsRepository;
 import com.goldentemple.springboot.web.dto.PostsListResponseDto;
 import com.goldentemple.springboot.web.dto.PostsResponceDto;
@@ -9,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final Posts00Mapper posts00Mapper;
 
     @Transactional
     public Long save(PostsSaveRequestDto rqDto){
@@ -41,11 +45,18 @@ public class PostsService {
         return new PostsResponceDto(entity);
     }
 
+//    @Transactional(readOnly = true)
+//    public List<PostsListResponseDto> findAllDesc(){
+//        //JPA 방식
+//        return postsRepository.findAllDesc().stream()
+//                .map(PostsListResponseDto::new)
+//                .collect(Collectors.toList());
+//    }
+
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc(){
-        return postsRepository.findAllDesc().stream()
-                .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+    public List<HashMap> findAllDesc(){
+        //mybatis
+        return posts00Mapper.selectListPosts();
     }
 
 }
