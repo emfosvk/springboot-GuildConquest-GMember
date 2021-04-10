@@ -29,14 +29,16 @@
             </tr>
             <tbody>
                 {{#posts}}
-                    <td>{{id}}</td>
-                    <td>
-                        <a href="/posts/update/{{id}}">
-                            {{title}}
-                        </a>
-                    </td>
-                    <td>{{author}}</td>
-                    <td>{{modified_date}}</td>
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>
+                           <a href="/posts/update/{{id}}">
+                                {{title}}
+                            </a>
+                        </td>
+                        <td>{{author}}</td>
+                        <td>{{modified_date}}</td>
+                    </tr>
                 {{/posts}}
             </tbody>
         </table>

@@ -57,4 +57,6 @@ dependencies {
     //Mybatis 추가
     compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2')
 
+    runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
+
 }
