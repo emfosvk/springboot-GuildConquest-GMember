@@ -29,17 +29,13 @@ public class HelloControllerTest {
     private MockMvc mvc;
 
     @WithMockUser(roles="MEMBER")
-   // @Test
+    @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
-
-        mvc.perform(get("/hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(hello));
     }
 
     @WithMockUser(roles="MEMBER")
-    //@Test
+    @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
         int amount = 1000;

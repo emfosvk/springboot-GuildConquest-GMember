@@ -22,7 +22,7 @@ public class ProfileControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    //@Test
+    @Test
     public void profile_path_can_call_without_auth() throws Exception{
         String expectedProfile = "default";
 

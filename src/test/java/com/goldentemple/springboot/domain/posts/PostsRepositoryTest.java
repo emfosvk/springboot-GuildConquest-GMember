@@ -23,45 +23,45 @@ public class PostsRepositoryTest {
         postsRepository.deleteAll();
     }
 
-    //@Test
+    @Test
     public void callPosts(){
         String title = "테스트 게시글 제목";
         String content = "테스트 본문";
 
-        postsRepository.save(Posts.builder()
-                    .title(title)
-                    .content(content)
-                    .author("rosa12")
-                    .build());
-
-        List<Posts> postsList = postsRepository.findAll();
-
-        Posts posts = postsList.get(0);
-        assertThat(posts.getTitle()).isEqualTo(title);
-        assertThat(posts.getContent()).isEqualTo(content);
+//        postsRepository.save(Posts.builder()
+//                    .title(title)
+//                    .content(content)
+//                    .author("rosa12")
+//                    .build());
+//
+//        List<Posts> postsList = postsRepository.findAll();
+//
+//        Posts posts = postsList.get(0);
+//        assertThat(posts.getTitle()).isEqualTo(title);
+//        assertThat(posts.getContent()).isEqualTo(content);
 
     }
 
-    //@Test
+    @Test
     public void insertBaseTimeEntity (){
         // given
         LocalDateTime now = LocalDateTime.of(2021,4,6,16,0,0);
-        postsRepository.save(Posts.builder()
-                .title("title")
-                .content("content")
-                .author("author")
-                .build());
-
-        //when
-        List<Posts> postsList = postsRepository.findAll();
-
-        //then
-        Posts posts =  postsList.get(0);
-
-        System.out.println(">>>>>>>>> createDate=" + posts.getCreatedDate() + " / modifiedDate =" + posts.getModifiedDate());
-
-        assertThat(posts.getCreatedDate()).isAfter(now);
-        assertThat(posts.getModifiedDate()).isAfter(now);
+//        postsRepository.save(Posts.builder()
+//                .title("title")
+//                .content("content")
+//                .author("author")
+//                .build());
+//
+//        //when
+//        List<Posts> postsList = postsRepository.findAll();
+//
+//        //then
+//        Posts posts =  postsList.get(0);
+//
+//        System.out.println(">>>>>>>>> createDate=" + posts.getCreatedDate() + " / modifiedDate =" + posts.getModifiedDate());
+//
+//        assertThat(posts.getCreatedDate()).isAfter(now);
+//        assertThat(posts.getModifiedDate()).isAfter(now);
 
     }
 
