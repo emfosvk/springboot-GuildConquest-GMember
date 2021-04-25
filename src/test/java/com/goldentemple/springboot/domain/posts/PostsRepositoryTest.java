@@ -23,7 +23,7 @@ public class PostsRepositoryTest {
         postsRepository.deleteAll();
     }
 
-    @Test
+    //@Test
     public void callPosts(){
         String title = "테스트 게시글 제목";
         String content = "테스트 본문";
@@ -42,7 +42,7 @@ public class PostsRepositoryTest {
 
     }
 
-    @Test
+    //@Test
     public void insertBaseTimeEntity (){
         // given
         LocalDateTime now = LocalDateTime.of(2021,4,6,16,0,0);
