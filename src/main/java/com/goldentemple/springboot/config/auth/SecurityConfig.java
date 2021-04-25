@@ -17,8 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .headers().frameOptions().disable() //h2console을 사용하기 위한 해제
                 .and().authorizeRequests()
-                    .antMatchers("/", "/css/**", "images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
-                    .antMatchers("/api/v1/**").hasRole(Role.MEMBER.name())
+                    .antMatchers("/vw/**.vw", "/", "/css/**", "/img/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                    .antMatchers("/api/v1/**", "/**/api/**").hasAnyRole(Role.MEMBER.name(), Role.MANAGER.name(), Role.MASTER.name(), Role.ADMIN.name())
                     .anyRequest().authenticated()
                 .and().logout().logoutSuccessUrl("/")
                 .and().oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);

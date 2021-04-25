@@ -1,0 +1,30 @@
+/*
+제목 라인 설정
+*/
+
+
+/*
+공통 버튼 row 관련 설정
+*/
+#screenHeader{
+    margin-top: 10px;
+}
+
+#screenHeader #screenTitle{
+    text-align : left;
+}
+
+#screenHeader #screenButton{
+    text-align : right;
+}
+
+#searchArea{
+    padding: 5px 15px 10px 15px;
+}
+
+#tableSearch th {
+    text-align : right;
+    padding: 0px 5px 0px 5px;
+}
+
+

@@ -1,0 +1,83 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper-top}}
+
+{{#userInfo}}
+    {{#userCertiYN}}
+
+        <div class="container">
+            <div class="row screenHeader">
+                <div id="screenTitle" class="col-sm-6">
+                    <h1>화면 제목</h1>
+                </div>
+                <div id="screenButton" class="col-sm-6">
+                     <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                     <a href="#" role="button" class="btn btn-primary">버튼 2</a>
+                     <a href="#" role="button" class="btn btn-primary">버튼 3</a>
+                </div>
+            </div>
+            <div id="mainTemgrid">
+
+            </div>
+            <div class="row screenContent">
+                <div class="col-sm-12">
+                    <table class="table table-horizontal table-bordered">
+                        <thead class="thead-strong" />
+                        <tr>
+                            <th>게시글 번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>최종수정일</th>
+                        </tr>
+                        <tbody>
+                        {{#posts}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>
+                                    <a href="/posts/update/{{id}}">
+                                        {{title}}
+                                    </a>
+                                </td>
+                                <td>{{author}}</td>
+                                <td>{{modified_date}}</td>
+                            </tr>
+                        {{/posts}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    {{/userCertiYN}}
+    {{^userCertiYN}}
+        {{>layout/main/cert_no_permission}}
+    {{/userCertiYN}}
+{{/userInfo}}
+{{^userInfo}}
+    {{>layout/main/cert_no_login}}
+{{/userInfo}}
+
+{{>layout/main/wrapper-bottom}}
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/app/main.js"></script>
+<script>
+		$(document).ready(function(){
+			// send parameter to scirpt for java parameter
+			var param = {
+				// default parameter
+				role     : 'IR01_0100_V01',
+				// session parameter
+				variables : {
+
+				}
+
+			};
+			main.initialize(param);
+		});
+	</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
+

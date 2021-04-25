@@ -1,0 +1,101 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper-top}}
+
+{{#userInfo}}
+    {{#userCertiYN}}
+
+        <div class="container">
+            <div class="row" id="screenHeader">
+                <div id="screenTitle" class="col-sm-6">
+                    <h1>캐릭터 설정</h1>
+                </div>
+                <div id="screenButton" class="col-sm-6">
+                    <a href="#" id="btnSearch" role="button" class="btn btn-primary">조회</a>
+                    <a href="#" id="btnClear"  role="button" class="btn btn-light">초기화</a>
+                    <a href="#" id="btnSave"   role="button" class="btn btn-success">저장</a>
+                </div>
+            </div>
+            <div class="row" id="searchArea">
+                <form id="frmS" onsubmit="return false">
+                    <table id="tableSearch">
+                        <colgroup>
+                            <col width="100px">
+                            <col width="270px">
+                            <col width="100px">
+                            <col width="270px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>클래스</th>
+                                <!--
+                                <td><input type="text" name="paramStr1" id="frmS_paramStr1" data-type="text" class="" placeholder="코드명 / 이름" maxlength="10" style="width: 100%; height: 28px;"></td>
+                                -->
+                                <td><div id="frmS_paramStr1"></div></td>
+                                <th>토벌전 사용여부</th>
+                                <td>
+                                    <div>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_1" value="Y" data-type="radio">
+                                        <label for="frmS_paramStr2_1">Yes</label>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_2" value="N">
+                                        <label for="frmS_paramStr2_1">No</label>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_3" value="A">
+                                        <label for="frmS_paramStr2_1">All</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </form>
+            </div>
+            <div class="row screenContent">
+                <div class="col-sm-12">
+                    <div id="toastGrid"></div>
+                </div>
+            </div>
+            <div class="row EditGridDiv">
+                <div class="col-sm-12">
+                    <a href="#" id="btnNew"    role="button" class="btn btn-info">신규</a>
+                    <a href="#" id="btnDelete" role="button" class="btn btn-danger">삭제</a>
+                </div>
+            </div>
+        </div>
+    {{/userCertiYN}}
+    {{^userCertiYN}}
+        {{>layout/main/cert_no_permission}}
+    {{/userCertiYN}}
+{{/userInfo}}
+{{^userInfo}}
+    {{>layout/main/cert_no_login}}
+{{/userInfo}}
+
+{{>layout/main/wrapper-bottom}}
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/app/comn/comn00_char.js"></script>
+<script>
+	$(document).ready(function(){
+		// send parameter to scirpt for java parameter
+
+        var classList = {{{classList}}};
+        var atkTypeList = {{{atkTypeList}}};
+
+		var param = {
+			// default parameter
+			role     : 'IR01_0100_V01',
+			// session parameter
+			variables : {
+   			         "classList" : classList
+   			        ,"atkTypeList" : atkTypeList
+				}
+			};
+
+		COMN00_CHAR.initialize(param);
+	});
+</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
+

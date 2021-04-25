@@ -10,7 +10,7 @@ import java.util.Map;
 @Mapper
 public interface Posts00Mapper {
 
-    public List<HashMap> selectListPosts();
+    public List<HashMap> selectListPosts(HashMap searchMap);
 
 
 }

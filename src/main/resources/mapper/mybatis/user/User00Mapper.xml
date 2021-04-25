@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldentemple.springboot.domain.user.User00Mapper">
+    <select id="selectListUser" resultType="java.util.HashMap">
+        select id,title,content,author,modified_date from user
+    </select>
+
+    <select id="selectUser" resultType="java.util.HashMap">
+        select
+            id,
+            email,
+            name,
+            picture,
+            role,
+            modified_date
+        from user
+        <where>
+            <if test="email != null and email !=''">
+                email = #{email}
+            </if>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectUserByEmail" resultType="java.util.HashMap">
+        select
+            id,
+            email,
+            name,
+            picture,
+            role,
+            modified_date
+        from user
+        where email = #{email}
+    </select>
+
+    <insert id="insertUser">
+       insert into user
+        (
+        email,
+        name,
+        picture,
+        role,
+        created_date,
+        modified_date
+        )
+        values
+        (
+        #{email},
+        #{name}
+        #{picture}
+        #{role}
+        #{created_date}
+        #{modified_date}
+        )
+    </insert>
+    <update id="updateUser">
+        update user
+        set name = #{name}
+           ,picture = #{picture}
+           ,modified_date = #{modified_date}
+    </update>
+
+</mapper>

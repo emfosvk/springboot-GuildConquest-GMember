@@ -54,9 +54,9 @@ public class PostsService {
 //    }
 
     @Transactional(readOnly = true)
-    public List<HashMap> findAllDesc(){
+    public List<HashMap> findAllDesc(HashMap searchMap){
         //mybatis
-        return posts00Mapper.selectListPosts();
+        return posts00Mapper.selectListPosts(searchMap);
     }
 
 }

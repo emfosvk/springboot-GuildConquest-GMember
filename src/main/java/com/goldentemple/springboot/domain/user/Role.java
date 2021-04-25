@@ -17,4 +17,14 @@ public enum Role {
     private final String key;
     private final String title;
 
+    public static Role fromString(String text) {
+        text = "ROLE_" + text;
+        for (Role b : Role.values()) {
+            if (b.key.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
 }

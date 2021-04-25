@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldentemple.springboot.domain.comn.Comn00Mapper">
+
+    <select id="selectListClassForDropDown" resultType="java.util.HashMap">
+        select
+        type_code as value,
+        type_code_name as label,
+        type_code_name as text
+        from tb_comn_class
+    </select>
+
+    <select id="selectListComnCodeForDropDown" resultType="java.util.HashMap">
+        select
+        comn_code as value,
+        comn_code_name as label,
+        comn_code_name as text
+        from tb_comn_code
+        where type_code like #{paramStr1}
+    </select>
+
+    <!-- [START - COMN00_CLASS] Common code Class Setting -->
+
+    <select id="selectListClass" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+          from (
+                select
+                    max(rownum) over() totalcount,
+                    type_code,
+                    type_code as type_code_hidden,
+                    type_code_name,
+                    type_code_comt
+                  from (
+                        select
+                            row_number() over() as rownum,
+                            type_code,
+                            type_code_name,
+                            type_code_comt
+                          from tb_comn_class
+                        <where>
+                            <if test="paramStr1 != null and paramStr1 !=''">
+                                (
+                                 type_code like CONCAT(#{paramStr1}, '%')
+                                  OR
+                                 type_code_name like CONCAT(#{paramStr1}, '%')
+                                )
+                            </if>
+                        </where>
+                        ) a
+                 group by type_code, type_code_name, type_code_comt
+               ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+    <insert id="insertClass">
+       insert into tb_comn_class
+        (
+        type_code,
+        type_code_name,
+        type_code_comt,
+        first_reg_dt,
+        first_reg_user_id,
+        last_upd_dt,
+        last_upd_user_id
+        )
+        values
+        (
+        #{type_code}
+        ,#{type_code_name}
+        ,#{type_code_comt}
+        ,sysdate()
+        ,#{id}
+        ,sysdate()
+        ,#{id}
+        )
+    </insert>
+    <update id="updateClass">
+        update tb_comn_class
+        set type_code_name = #{type_code_name}
+           ,type_code_comt = #{type_code_comt}
+           ,last_upd_dt = sysdate()
+        where type_code = #{type_code}
+    </update>
+
+    <delete id="deleteClass">
+        delete from tb_comn_class
+        where type_code = #{type_code}
+    </delete>
+
+    <!-- [E N D - COMN00_CLASS] Common code Class Setting -->
+
+    <!-- [START - COMN00_CODE] Common code Setting -->
+
+    <select id="selectListComnCode" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+          from (
+                select
+                    max(rownum) over() totalcount,
+                    type_code,
+                    type_code as type_code_hidden,
+                    comn_code,
+                    comn_code_name,
+                    comn_code_comt,
+                    attr_01,
+                    attr_02,
+                    attr_03,
+                    attr_04,
+                    attr_05,
+                    use_yn
+                  from (
+                            select
+                                row_number() over() as rownum,
+                                type_code,
+                                comn_code,
+                                comn_code_name,
+                                comn_code_comt,
+                                attr_01,
+                                attr_02,
+                                attr_03,
+                                attr_04,
+                                attr_05,
+                                use_yn
+                            from tb_comn_code
+                            <where>
+                                <if test='paramStr1 != null and paramStr1 !=""'>
+                                    type_code = #{paramStr1}
+                                </if>
+                                <if test='paramStr2 != null and paramStr2 !="" and paramStr2 !="A" '>
+                                    use_yn = #{paramStr2}
+                                </if>
+                            </where>
+                       ) a
+                group by type_code, comn_code, comn_code_name, comn_code_comt, use_yn,attr_01, attr_02, attr_03, attr_04, attr_05, use_yn
+               ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+
+
+    <insert id="insertComnCode">
+        insert into tb_comn_code
+        (
+            type_code,
+            comn_code,
+            comn_code_name,
+            comn_code_comt,
+            attr_01,
+            attr_02,
+            attr_03,
+            attr_04,
+            attr_05,
+            use_yn,
+            first_reg_dt,
+            first_reg_user_id,
+            last_upd_dt,
+            last_upd_user_id
+        )
+        values
+        (
+              #{type_code}
+            , #{comn_code}
+            , #{comn_code_name}
+            , #{comn_code_comt}
+            , #{attr_01}
+            , #{attr_02}
+            , #{attr_03}
+            , #{attr_04}
+            , #{attr_05}
+            , #{use_yn}
+            , sysdate()
+            , #{id}
+            , sysdate()
+            , #{id}
+        )
+    </insert>
+    <update id="updateComnCode">
+        update tb_comn_code
+        set
+              comn_code_name = #{comn_code_name}
+            , comn_code_comt = #{comn_code_comt}
+            , attr_01 = #{attr_01}
+            , attr_02 = #{attr_02}
+            , attr_03 = #{attr_03}
+            , attr_04 = #{attr_04}
+            , attr_05 = #{attr_05}
+            , use_yn =  #{use_yn}
+            , last_upd_dt = sysdate()
+            , last_upd_user_id = #{id}
+        where type_code = #{type_code}
+          and comn_code = #{comn_code}
+    </update>
+
+    <update id="deleteComnCode">
+        update tb_comn_code
+        set
+              use_yn = 'N'
+            , last_upd_dt = sysdate()
+            , last_upd_user_id = #{id}
+        where type_code = #{type_code}
+        and comn_code = #{comn_code}
+    </update>
+
+    <!-- [E N D - COMN00_CODE] Common code Setting -->
+
+
+    <!-- [START - COMN00_CHAR] Charater Setting -->
+    <!-- [E N D - COMN00_CHAR] Charater Setting -->
+
+    <select id="selectListChar" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+        from (
+            select
+                max(rownum) over() totalcount,
+                rownum,
+                char_id,
+                char_id_hidden,
+                char_name,
+                class,
+                atk_type,
+                cq_use_yn,
+                char_comt
+            from (
+                select
+                    row_number() over() as rownum,
+                    char_id,
+                    char_id as char_id_hidden,
+                    char_name,
+                    class,
+                    atk_type,
+                    cq_use_yn,
+                    char_comt
+                from tb_comn_char
+                <where>
+                    <if test='paramStr1 != null and paramStr1 !=""'>
+                        class = #{paramStr1}
+                    </if>
+                    <if test='paramStr2 != null and paramStr2 !="" and paramStr2 !="A" '>
+                        cq_use_yn = #{paramStr2}
+                    </if>
+                </where>
+            ) a
+            group by char_id, char_name, class, atk_type, cq_use_yn, char_comt
+
+        ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+    <insert id="insertChar">
+        insert into tb_comn_char
+        (
+            char_id,
+            char_name,
+            class,
+            atk_type,
+            cq_use_yn,
+            char_comt,
+            first_reg_dt,
+            first_reg_user_id,
+            last_upd_dt,
+            last_upd_user_id
+        )
+        values
+        (
+              #{char_id}
+            , #{char_name}
+            , #{class}
+            , #{atk_type}
+            , #{cq_use_yn}
+            , #{char_comt}
+            , sysdate()
+            , #{id}
+            , sysdate()
+            , #{id}
+        )
+    </insert>
+    <update id="updateChar">
+        update tb_comn_char
+        set
+             char_name         = #{char_name}
+            ,class             = #{class}
+            ,atk_type          = #{atk_type}
+            ,cq_use_yn         = #{cq_use_yn}
+            ,char_comt         = #{char_comt}
+            ,last_upd_dt       = sysdate()
+            ,last_upd_user_id  = #{id}
+        where char_id = #{char_id}
+    </update>
+
+    <update id="deleteChar">
+        update tb_comn_char
+        set
+              cq_use_yn = 'N'
+            , last_upd_dt = sysdate()
+            , last_upd_user_id = #{id}
+        where char_id = #{char_id}
+    </update>
+
+    <!-- [E N D - COMN00_CHAR] Charater Setting -->
+
+    <!-- [START - COMN00_ITEM] Item Setting -->
+
+    <select id="selectListItem" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+        from (
+            select
+                max(rownum) over() totalcount,
+                rownum,
+                item_id,
+                item_name,
+                char_id,
+                item_type,
+                cq_use_yn,
+                icon_file,
+                icon_x,
+                icon_y,
+                item_comt
+            from (
+                    select
+                        row_number() over() as rownum,
+                        item_id,
+                        item_name,
+                        char_id,
+                        item_type,
+                        cq_use_yn,
+                        icon_file,
+                        icon_x,
+                        icon_y,
+                        item_comt
+                    from tb_comn_item
+                    <where>
+                        <if test='paramStr1 != null and paramStr1 !=""'>
+                            item_type = #{paramStr1}
+                        </if>
+                        <if test='paramStr2 != null and paramStr2 !="" and paramStr2 !="A" '>
+                            cq_use_yn = #{paramStr2}
+                        </if>
+                    </where>
+                    order by item_id
+                 ) a
+            group by item_id, item_name, item_type, cq_use_yn, item_comt, char_id, icon_file, icon_x , icon_y
+
+             ) aaa
+        order by item_id
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+    <insert id="insertItem">
+        insert into tb_comn_item
+        (
+        item_id,
+        item_type,
+        item_name,
+        char_id,
+        item_comt,
+        cq_use_yn,
+        icon_file,
+        icon_x,
+        icon_y,
+        first_reg_dt,
+        first_reg_user_id,
+        last_upd_dt,
+        last_upd_user_id
+        )
+        values
+        (
+          (SELECT nvl(MAX(a.item_id),0) + 1 FROM tb_comn_item a)
+        , #{item_type}
+        , #{item_name}
+        , #{char_id}
+        , #{item_comt}
+        , #{cq_use_yn}
+        , #{icon_file}
+        , #{icon_x}
+        , #{icon_y}
+        , sysdate()
+        , #{id}
+        , sysdate()
+        , #{id}
+        )
+    </insert>
+    <update id="updateItem">
+        update tb_comn_item
+        set
+        item_name          = #{item_name}
+        ,item_type         = #{item_type}
+        ,char_id           = #{char_id}
+        ,item_comt         = #{item_comt}
+        ,cq_use_yn         = #{cq_use_yn}
+        ,icon_file         = #{icon_file}
+        ,icon_x            = #{icon_x}
+        ,icon_y            = #{icon_y}
+        ,last_upd_dt       = sysdate()
+        ,last_upd_user_id  = #{id}
+        where item_id = #{item_id}
+    </update>
+
+    <update id="deleteItem">
+        update tb_comn_item
+        set
+        cq_use_yn = 'N'
+        , last_upd_dt = sysdate()
+        , last_upd_user_id = #{id}
+        where item_id = #{item_id}
+    </update>
+
+    <!-- [E N D - COMN00_ITEM] Item Setting -->
+
+    <!-- [START - COMN00_CHAR_ITEM] Charater Item Mapping -->
+
+
+    <!-- [E N D - COMN00_CHAR_ITEM] Charater Item Mapping -->
+
+
+</mapper>

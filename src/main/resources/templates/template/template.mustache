@@ -1,0 +1,44 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper}}
+
+{{#userInfo}}
+    {{#userCertiYN}}
+
+        <!--
+        여기에 기본 소스 코드 집어 넣으세요.
+        -->
+
+    {{/userCertiYN}}
+    {{^userCertiYN}}
+        {{>layout/main/cert_no_permission}}
+    {{/userCertiYN}}
+
+{{/userInfo}}
+{{^userInfo}}
+    {{>layout/main/cert_no_login}}
+{{/userInfo}}
+
+{{>layout/main/wrapper-bottom}}
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/template/template.js"></script>
+<script>
+		$(document).ready(function(){
+			// send parameter to scirpt for java parameter
+			var param = {
+				// default parameter
+				role     : 'IR01_0100_V01',
+				// session parameter
+				variables : {
+
+				}
+
+			};
+			TEMPLATE_JS.initialize(param);
+		});
+	</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
