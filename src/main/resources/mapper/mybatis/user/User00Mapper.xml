@@ -39,21 +39,21 @@
     <insert id="insertUser">
        insert into user
         (
-        email,
-        name,
-        picture,
-        role,
-        created_date,
-        modified_date
+         email
+        ,name
+        ,picture
+        ,role
+        ,created_date
+        ,modified_date
         )
         values
         (
-        #{email},
-        #{name}
-        #{picture}
-        #{role}
-        #{created_date}
-        #{modified_date}
+         #{email}
+        ,#{name}
+        ,#{picture}
+        ,#{role}
+        ,#{created_date}
+        ,#{modified_date}
         )
     </insert>
     <update id="updateUser">
@@ -61,6 +61,7 @@
         set name = #{name}
            ,picture = #{picture}
            ,modified_date = #{modified_date}
+        where email = #{email}
     </update>
 
 </mapper>

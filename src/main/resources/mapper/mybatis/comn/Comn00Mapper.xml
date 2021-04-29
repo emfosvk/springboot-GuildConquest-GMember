@@ -20,6 +20,38 @@
         where type_code like #{paramStr1}
     </select>
 
+    <select id="selectS3ImgInfo" resultType="java.util.HashMap">
+        select
+        af.attr_01 as af_s3_path, af.attr_02 as af_padding_top, af.attr_03 as af_width, af.attr_04 as af_height
+        , ci.attr_01 as ci_s3_path, ci.attr_02 as ci_padding_top, ci.attr_03 as ci_width, ci.attr_04 as ci_height
+        , cp.attr_01 as cp_s3_path, cp.attr_02 as cp_padding_top, cp.attr_03 as cp_width, cp.attr_04 as cp_height
+        , uw.attr_01 as uw_s3_path, uw.attr_02 as uw_padding_top, uw.attr_03 as uw_width, uw.attr_04 as uw_height
+        , sw.attr_01 as sw_s3_path, sw.attr_02 as sw_padding_top, sw.attr_03 as sw_width, sw.attr_04 as sw_height
+        , ut.attr_01 as ut_s3_path, ut.attr_02 as ut_padding_top, ut.attr_03 as ut_width, ut.attr_04 as ut_height
+        from
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'AF_ICON') af
+
+        join
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'CHAR_ICON') ci
+        on af.type_code = ci.type_code
+
+        join
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'CHAR_PORT') cp
+        on af.type_code = cp.type_code
+
+        join
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'UW_ICON') uw
+        on af.type_code = uw.type_code
+
+        join
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'SW_ICON') sw
+        on af.type_code = sw.type_code
+
+        join
+        (SELECT type_code, comn_code, attr_01, attr_02, attr_03, attr_04 FROM tb_comn_code WHERE type_Code LIKE 'IMG_CONFIG' AND comn_code = 'UT_ICON') ut
+        on af.type_code = ut.type_code
+    </select>
+
     <!-- [START - COMN00_CLASS] Common code Class Setting -->
 
     <select id="selectListClass" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
@@ -234,8 +266,14 @@
                 class,
                 atk_type,
                 cq_use_yn,
-                char_comt
-            from (
+                char_comt,
+                icon_file,
+                icon_x,
+                icon_y,
+                port_file,
+                port_x,
+                port_y
+        from (
                 select
                     row_number() over() as rownum,
                     char_id,
@@ -244,7 +282,13 @@
                     class,
                     atk_type,
                     cq_use_yn,
-                    char_comt
+                    char_comt,
+                    icon_file,
+                    icon_x,
+                    icon_y,
+                    port_file,
+                    port_x,
+                    port_y
                 from tb_comn_char
                 <where>
                     <if test='paramStr1 != null and paramStr1 !=""'>
@@ -255,7 +299,8 @@
                     </if>
                 </where>
             ) a
-            group by char_id, char_name, class, atk_type, cq_use_yn, char_comt
+            group by char_id, char_name, class, atk_type, cq_use_yn, char_comt, icon_file, icon_x, icon_y, port_file, port_x, port_y
+
 
         ) aaa
 
@@ -276,6 +321,12 @@
             atk_type,
             cq_use_yn,
             char_comt,
+            icon_file,
+            icon_x,
+            icon_y,
+            port_file,
+            port_x,
+            port_y,
             first_reg_dt,
             first_reg_user_id,
             last_upd_dt,
@@ -289,6 +340,12 @@
             , #{atk_type}
             , #{cq_use_yn}
             , #{char_comt}
+            , #{icon_file}
+            , #{icon_x}
+            , #{icon_y}
+            , #{port_file}
+            , #{port_x}
+            , #{port_y}
             , sysdate()
             , #{id}
             , sysdate()
@@ -303,6 +360,12 @@
             ,atk_type          = #{atk_type}
             ,cq_use_yn         = #{cq_use_yn}
             ,char_comt         = #{char_comt}
+            ,icon_file = #{icon_file}
+            ,icon_x    = #{icon_x}
+            ,icon_y    = #{icon_y}
+            ,port_file = #{port_file}
+            ,port_x    = #{port_x}
+            ,port_y    = #{port_y}
             ,last_upd_dt       = sysdate()
             ,last_upd_user_id  = #{id}
         where char_id = #{char_id}

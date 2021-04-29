@@ -84,11 +84,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         if("I".equals(mergeMode)){
             userinfo = new HashMap();
-            userinfo.put("role", "GUEST");
+
+
+//            userinfo.put("role", "GUEST");
+            // 임시허용
+            userinfo.put("role", "MEMBER");
         }
 
         LocalDateTime nowTime = LocalDateTime.now();
 
+        userinfo.put("email",  attributes.getEmail());
         userinfo.put("name", attributes.getName());
         userinfo.put("picture", attributes.getPicture());
         userinfo.put("created_date", nowTime);

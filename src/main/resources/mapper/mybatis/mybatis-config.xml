@@ -14,5 +14,6 @@
         <mapper resource="mapper/mybatis/posts/Posts00Mapper.xml" />
         <mapper resource="mapper/mybatis/user/User00Mapper.xml" />
         <mapper resource="mapper/mybatis/comn/Comn00Mapper.xml" />
+        <mapper resource="mapper/mybatis/book/Book00Mapper.xml" />
     </mappers>
 </configuration>

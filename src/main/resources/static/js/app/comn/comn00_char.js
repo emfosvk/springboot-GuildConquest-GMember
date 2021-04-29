@@ -129,6 +129,47 @@ var COMN00_CHAR = function(){
                              {
                                header : '캐릭터 코멘트',
                                name   : 'char_comt',
+                               width  : 500,
+                               editor : 'text'
+                             },
+                             {
+                               header : '아이콘파일명',
+                               name   : 'icon_file',
+                               width  : 100,
+                               editor : 'text'
+                             },
+                             {
+                               header : 'X',
+                               name   : 'icon_x',
+                               width  : 30,
+                               align  : 'center',
+                               editor : 'text'
+                             },
+                             {
+                               header : 'Y',
+                               name   : 'icon_y',
+                               width  : 30,
+                               align  : 'center',
+                               editor : 'text'
+                             },
+                             {
+                               header : '초상화파일명',
+                               name   : 'port_file',
+                               width  : 100,
+                               editor : 'text'
+                             },
+                             {
+                               header : 'X',
+                               name   : 'port_x',
+                               width  : 30,
+                               align  : 'center',
+                               editor : 'text'
+                             },
+                             {
+                               header : 'Y',
+                               name   : 'port_y',
+                               width  : 30,
+                               align  : 'center',
                                editor : 'text'
                              }
                          ]
@@ -146,7 +187,9 @@ var COMN00_CHAR = function(){
                       columns: toastGridCols,
                       showDummyRows: true,
                       columnOptions: {
-                        resizable: true
+                        resizable: true,
+                        frozenCount: 2,
+                        frozenBorderWidth: 2
                       }
                     });
 

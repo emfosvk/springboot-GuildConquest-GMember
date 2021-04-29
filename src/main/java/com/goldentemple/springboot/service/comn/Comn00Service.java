@@ -37,6 +37,11 @@ public class Comn00Service extends CustmJavaUtils {
         return comn00Mapper.selectListClass(searchMap);
     }
 
+    @Transactional(readOnly = true)
+    public Map selectS3ImgInfo(){
+        return comn00Mapper.selectS3ImgInfo();
+    }
+
     public void modifyClass(HttpSession session, Map<String, Object> commandMap) throws Exception {
 
         List<Map> columnData  = this.getJsonDataToList(commandMap, "columnData");

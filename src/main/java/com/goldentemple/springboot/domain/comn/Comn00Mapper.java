@@ -13,6 +13,7 @@ public interface Comn00Mapper {
     // comn code
     public List<Map> selectListClassForDropDown();
     public List<Map> selectListComnCodeForDropDown(ToastGridParamDto searchMap);
+    public Map selectS3ImgInfo();
 
     public List<Map> selectListClass(ToastGridParamDto searchMap);
     public void insertClass(Map insertMap);

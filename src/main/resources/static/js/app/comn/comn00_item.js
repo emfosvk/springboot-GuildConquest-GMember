@@ -157,7 +157,9 @@ var COMN00_ITEM = function(){
                       rowHeaders: [{ type: "checkbox" }, { type: "rowNum" }],
                       columns: toastGridCols,
                       columnOptions: {
-                        resizable: true
+                        resizable: true,
+                        frozenCount: 2,
+                        frozenBorderWidth: 2
                       }
                     });
 
