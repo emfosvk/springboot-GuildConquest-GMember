@@ -425,13 +425,13 @@ var BOOK00_CHARITEM = function(){
                   spaceBetween: 10,
                   slidesPerView: 'auto',
                   freeMode: true,
-                  loopedSlides: 5, //looped slides should be the same
+                  loopedSlides: 6, //looped slides should be the same
                   watchSlidesVisibility: true,
                   watchSlidesProgress: true,
                 });
                 galleryTop = new Swiper('.gallery-top', {
                   spaceBetween: 10,
-                  loopedSlides: 5, //looped slides should be the same
+                  loopedSlides: 6, //looped slides should be the same
                   navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
