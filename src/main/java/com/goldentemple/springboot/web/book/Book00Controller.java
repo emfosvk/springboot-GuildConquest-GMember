@@ -24,15 +24,12 @@ public class Book00Controller extends CustmJavaUtils {
 
     @GetMapping("/vw/book00_charItem.vw")
     public String book00_charItem(Model model, @LoginUser SessionUser user){
-        //model.addAttribute("posts", postsService.findAllDesc(null));
-        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if(user != null){
             //아래 정보는 인터셉터로 뺴버림.
             //모든 url Path 리턴될 예정.
             //model.addAttribute("userInfo", getUserInfo(user));
         }
-
 
         ToastGridParamDto searchMap = new ToastGridParamDto();
         searchMap.setParamStr1("CLASS");
@@ -46,29 +43,6 @@ public class Book00Controller extends CustmJavaUtils {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        return "app/book/book00_charItem";
+        return "app/book/book00_charitem";
     }
-
-    //@GetMapping("/vw/comn00_item.vw")
-    public String comn00_item(Model model, @LoginUser SessionUser user){
-        //model.addAttribute("posts", postsService.findAllDesc(null));
-        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
-        if(user != null){
-            //아래 정보는 인터셉터로 뺴버림.
-            //모든 url Path 리턴될 예정.
-            //model.addAttribute("userInfo", getUserInfo(user));
-        }
-
-        ToastGridParamDto searchMap = new ToastGridParamDto();
-        searchMap.setParamStr1("EQUIP_TYPE");
-        List<Map> searchResult = (List<Map>) comn00Service.selectListComnCodeForDropDown(searchMap);
-        JSONArray searchResultJSON = convertListToJson(searchResult);
-        model.addAttribute("itemTypeList", searchResultJSON);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        return "app/book/book00_charItem";
-    }
-
 }

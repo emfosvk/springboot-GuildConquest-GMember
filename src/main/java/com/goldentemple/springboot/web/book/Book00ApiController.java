@@ -20,12 +20,11 @@ import java.util.Map;
 @RestController
 public class Book00ApiController {
 
-    private final Comn00Service comn00Service;
     private final Book00Service book00Service;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/book/api/searchCharItem.api")
-    public Map<String, Object> searchClass(ToastGridParamDto searchMap){
+    public Map<String, Object> searchCharItem(ToastGridParamDto searchMap){
 
         List<Map> searchResult = book00Service.selectListBookCharEquip(searchMap);
 
