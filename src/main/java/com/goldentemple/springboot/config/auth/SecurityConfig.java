@@ -15,9 +15,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
-                .headers().frameOptions().disable() //h2console을 사용하기 위한 해제
+                .headers().frameOptions().disable() //h2console을 사용하기 위한 해제/comn/api/modify
                 .and().authorizeRequests()
                     .antMatchers("/vw/**.vw", "/", "/css/**", "/img/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                    .antMatchers("/**/api/modify**").hasAnyRole(Role.MANAGER.name(), Role.MASTER.name(), Role.ADMIN.name())
                     .antMatchers("/api/v1/**", "/**/api/**").hasAnyRole(Role.MEMBER.name(), Role.MANAGER.name(), Role.MASTER.name(), Role.ADMIN.name())
                     .anyRequest().authenticated()
                 .and().logout().logoutSuccessUrl("/")
