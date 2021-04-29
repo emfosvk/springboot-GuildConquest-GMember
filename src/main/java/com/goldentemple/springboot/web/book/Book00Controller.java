@@ -23,7 +23,7 @@ public class Book00Controller extends CustmJavaUtils {
     private final Comn00Service comn00Service;
 
     @GetMapping("/vw/book00_charItem.vw")
-    public String comn00_char(Model model, @LoginUser SessionUser user){
+    public String book00_charItem(Model model, @LoginUser SessionUser user){
         //model.addAttribute("posts", postsService.findAllDesc(null));
         //SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
