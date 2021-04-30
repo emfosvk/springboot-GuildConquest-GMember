@@ -254,9 +254,11 @@ var BOOK00_CHARITEM = function(){
                                                 + "</div>"
                                                 + "<br/>"
                                                 + "<br/>"
+                                                + "<span class='charInfoCharNickName'>"+ map.char_nickname +"</span>"
+                                                + "<br/>"
                                                 + "<span class='charInfoCharName'>"+ map.char_name +"</span>"
                                                 + "<br/>"
-                                                + "<span class='charInfoClass"+ map.class +"'>" + map.class_name + "</span>"
+                                                + "<span class='charInfoClass charInfoClass"+ map.class +"'>" + map.class_name + "</span>"
                                                 + "<br/>"
                                                 + "<span class='charInfoAtkType"+map.atk_type+"'>" + map.atk_type_name + "</span>"
                                             + "</td>"
@@ -271,10 +273,10 @@ var BOOK00_CHARITEM = function(){
                                                 +        "';"
                                                 + ">"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.uw_name
                                             + "</td>"
-                                            + "<td>" // Item Comt
+                                            + "<td class='itemComtTd'>" // Item Comt
                                                 + map.uw_comt
                                             + "</td>"
                                         + "</tr>"
@@ -292,11 +294,34 @@ var BOOK00_CHARITEM = function(){
                                                 + ">"
                                                 + "</div>"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.sw_name
                                             + "</td>"
                                             + "<td>" // Item Comt
-                                                + map.sw_comt
+                                                +"<table class='swTable'>"
+                                                +	"<colgroup>"
+                                                +       "<col width='100'>"
+                                                +       "<col width='521'>"
+                                                +   "</colgroup>"
+                                                +	"<tbody>"
+                                                +		"<tr >"
+                                                +			"<td class='swTableTD1' style='border-top: 2px solid rgb(0, 0, 0);'>" + "발동 조건" + "</td>"
+                                                +			"<td class='swTableTD2' style='border-top: 2px solid rgb(0, 0, 0);'>"  + map.sw_comt + "</td>"
+                                                +		"</tr>"
+                                                +		"<tr>"
+                                                +			"<td class='swTableTD1'>" + "고유 스킬" + "</td>"
+                                                +			"<td class='swTableTD2'>" + map.sw_comt_02 + "</td>"
+                                                +		"</tr>"
+                                                +		"<tr>"
+                                                +			"<td class='swTableTD1'>" + "승급 1단계" + "</td>"
+                                                +			"<td class='swTableTD2'>" + map.sw_comt_03 + "</td>"
+                                                +		"</tr>"
+                                                +		"<tr>"
+                                                +			"<td class='swTableTD1' style='border-bottom: 2px solid rgb(0, 0, 0);'>" + "승급 2단계" + "</td>"
+                                                +			"<td class='swTableTD2' style='border-bottom: 2px solid rgb(0, 0, 0);'>" + map.sw_comt_04 + "</td>"
+                                                +		"</tr>"
+                                                +	"</tbody>"
+                                                +"</table>"
                                             + "</td>"
                                         + "</tr>"
 
@@ -313,10 +338,10 @@ var BOOK00_CHARITEM = function(){
                                                 + ">"
                                                 + "</div>"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.ut1_name
                                             + "</td>"
-                                            + "<td>" // Item Comt
+                                            + "<td class='itemComtTd'>" // Item Comt
                                                 + map.ut1_comt
                                             + "</td>"
                                         + "</tr>"
@@ -334,10 +359,10 @@ var BOOK00_CHARITEM = function(){
                                                 + ">"
                                                 + "</div>"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.ut2_name
                                             + "</td>"
-                                            + "<td>" // Item Comt
+                                            + "<td class='itemComtTd'>" // Item Comt
                                                 + map.ut2_comt
                                             + "</td>"
                                         + "</tr>"
@@ -355,10 +380,10 @@ var BOOK00_CHARITEM = function(){
                                                 + ">"
                                                 + "</div>"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.ut3_name
                                             + "</td>"
-                                            + "<td>" // Item Comt
+                                            + "<td class='itemComtTd'>" // Item Comt
                                                 + map.ut3_comt
                                             + "</td>"
                                         + "</tr>"
@@ -376,10 +401,10 @@ var BOOK00_CHARITEM = function(){
                                                 + ">"
                                                 + "</div>"
                                             + "</td>"
-                                            + "<td>" // Item Name
+                                            + "<td class='itemNameTd'>" // Item Name
                                                 + map.ut4_name
                                             + "</td>"
-                                            + "<td>" // Item Comt
+                                            + "<td class='itemComtTd'>" // Item Comt
                                                 + map.ut4_comt
                                             + "</td>"
                                         + "</tr>"

@@ -84,6 +84,12 @@ var COMN00_CHAR = function(){
                                validation : { required : true }
                              },
                              {
+                               header : '타이틀',
+                               name   : 'char_nickname',
+                               width  : 150,
+                               editor : 'text'
+                             },
+                             {
                                header : '클래스',
                                name   : 'class',
                                width  : 100,
@@ -129,7 +135,7 @@ var COMN00_CHAR = function(){
                              {
                                header : '캐릭터 코멘트',
                                name   : 'char_comt',
-                               width  : 500,
+                               width  : 250,
                                editor : 'text'
                              },
                              {

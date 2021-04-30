@@ -263,6 +263,7 @@
                 char_id,
                 char_id_hidden,
                 char_name,
+                char_nickname,
                 class,
                 atk_type,
                 cq_use_yn,
@@ -279,6 +280,7 @@
                     char_id,
                     char_id as char_id_hidden,
                     char_name,
+                    char_nickname,
                     class,
                     atk_type,
                     cq_use_yn,
@@ -299,7 +301,7 @@
                     </if>
                 </where>
             ) a
-            group by char_id, char_name, class, atk_type, cq_use_yn, char_comt, icon_file, icon_x, icon_y, port_file, port_x, port_y
+            group by char_id, char_name, char_nickname, class, atk_type, cq_use_yn, char_comt, icon_file, icon_x, icon_y, port_file, port_x, port_y
 
 
         ) aaa
@@ -317,6 +319,7 @@
         (
             char_id,
             char_name,
+            char_nickname,
             class,
             atk_type,
             cq_use_yn,
@@ -336,6 +339,7 @@
         (
               #{char_id}
             , #{char_name}
+            , #{char_nickname}
             , #{class}
             , #{atk_type}
             , #{cq_use_yn}
@@ -356,6 +360,7 @@
         update tb_comn_char
         set
              char_name         = #{char_name}
+            ,char_nickname     = #{char_nickname}
             ,class             = #{class}
             ,atk_type          = #{atk_type}
             ,cq_use_yn         = #{cq_use_yn}
@@ -399,7 +404,10 @@
                 icon_file,
                 icon_x,
                 icon_y,
-                item_comt
+                item_comt,
+                item_comt_02,
+                item_comt_03,
+                item_comt_04
             from (
                     select
                         row_number() over() as rownum,
@@ -411,7 +419,10 @@
                         icon_file,
                         icon_x,
                         icon_y,
-                        item_comt
+                        item_comt,
+                        item_comt_02,
+                        item_comt_03,
+                        item_comt_04
                     from tb_comn_item
                     <where>
                         <if test='paramStr1 != null and paramStr1 !=""'>
@@ -423,7 +434,7 @@
                     </where>
                     order by item_id
                  ) a
-            group by item_id, item_name, item_type, cq_use_yn, item_comt, char_id, icon_file, icon_x , icon_y
+            group by item_id, item_name, item_type, cq_use_yn, item_comt, char_id, icon_file, icon_x , icon_y, item_comt_02, item_comt_03, item_comt_04
 
              ) aaa
         order by item_id
@@ -443,6 +454,9 @@
         item_name,
         char_id,
         item_comt,
+        item_comt_02,
+        item_comt_03,
+        item_comt_04,
         cq_use_yn,
         icon_file,
         icon_x,
@@ -459,6 +473,9 @@
         , #{item_name}
         , #{char_id}
         , #{item_comt}
+        , #{item_comt_02}
+        , #{item_comt_03}
+        , #{item_comt_04}
         , #{cq_use_yn}
         , #{icon_file}
         , #{icon_x}
@@ -476,6 +493,9 @@
         ,item_type         = #{item_type}
         ,char_id           = #{char_id}
         ,item_comt         = #{item_comt}
+        ,item_comt_02      = #{item_comt_02}
+        ,item_comt_03      = #{item_comt_03}
+        ,item_comt_04      = #{item_comt_04}
         ,cq_use_yn         = #{cq_use_yn}
         ,icon_file         = #{icon_file}
         ,icon_x            = #{icon_x}

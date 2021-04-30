@@ -135,8 +135,29 @@ var COMN00_ITEM = function(){
                                align  : 'center'
                              },
                              {
-                               header : '캐릭터 코멘트',
+                               header : '아이템 코멘트 1',
                                name   : 'item_comt',
+                               whiteSpace: 'normal',
+                               editor : 'text',
+                               width  : 500
+                             },
+                             {
+                               header : '아이템 코멘트 2',
+                               name   : 'item_comt_02',
+                               whiteSpace: 'normal',
+                               editor : 'text',
+                               width  : 500
+                             },
+                             {
+                               header : '아이템 코멘트 3',
+                               name   : 'item_comt_03',
+                               whiteSpace: 'normal',
+                               editor : 'text',
+                               width  : 500
+                             },
+                             {
+                               header : '아이템 코멘트 4',
+                               name   : 'item_comt_04',
                                whiteSpace: 'normal',
                                editor : 'text',
                                width  : 500

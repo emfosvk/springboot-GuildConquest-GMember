@@ -7,17 +7,17 @@
 
     <select id="selectListBookCharEquip" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
         SELECT
-              ch.char_id, ch.char_name, ch.class, ch.class_name, ch.atk_type, ch.atk_type_name
+              ch.char_id, ch.char_name, ch.char_nickname, ch.class, ch.class_name, ch.atk_type, ch.atk_type_name
             , ch.icon_file, ch.icon_x, ch.icon_y, ch.port_file, ch.port_x, ch.port_y
-            ,  uw_name,  uw_comt,  uw_file,  uw_x,  uw_y
-            , ut1_name, ut1_comt, ut1_file, ut1_x, ut1_y
-            , ut2_name, ut2_comt, ut2_file, ut2_x, ut2_y
-            , ut3_name, ut3_comt, ut3_file, ut3_x, ut3_y
-            , ut4_name, ut4_comt, ut4_file, ut4_x, ut4_y
-            ,  sw_name,  sw_comt,  sw_file,  sw_x,  sw_y
+            ,  uw_name,  uw_comt,  uw_comt_02,  uw_comt_03,  uw_comt_04,  uw_file,  uw_x,  uw_y
+            , ut1_name, ut1_comt, ut1_comt_02, ut1_comt_03, ut1_comt_04, ut1_file, ut1_x, ut1_y
+            , ut2_name, ut2_comt, ut2_comt_02, ut2_comt_03, ut2_comt_04, ut2_file, ut2_x, ut2_y
+            , ut3_name, ut3_comt, ut3_comt_02, ut3_comt_03, ut3_comt_04, ut3_file, ut3_x, ut3_y
+            , ut4_name, ut4_comt, ut4_comt_02, ut4_comt_03, ut4_comt_04, ut4_file, ut4_x, ut4_y
+            ,  sw_name,  sw_comt,  sw_comt_02,  sw_comt_03,  sw_comt_04,  sw_file,  sw_x,  sw_y
           FROM
             (
-                SELECT a.char_id, a.char_name, a.class, b.class_name, a.atk_type, c.atk_type_name, a.icon_file, a.icon_x, a.icon_y, a.port_file, a.port_x, a.port_y
+                SELECT a.char_id, a.char_name, a.char_nickname, a.class, b.class_name, a.atk_type, c.atk_type_name, a.icon_file, a.icon_x, a.icon_y, a.port_file, a.port_x, a.port_y
                   FROM tb_comn_char a
                   JOIN (SELECT comn_code AS class, comn_code_name AS class_name FROM tb_comn_code WHERE type_code = 'CLASS') b
                     ON a.class = b.class
@@ -30,31 +30,42 @@
                 SELECT
                     uw.char_id
                     ,  uw.item_name as  uw_name,  uw.item_comt as  uw_comt,  uw.icon_file as  uw_file,  uw.icon_x as  uw_x,  uw.icon_y as  uw_y
+                    ,  uw.item_comt_02 as  uw_comt_02,  uw.item_comt_03 as  uw_comt_03,  uw.item_comt_04 as  uw_comt_04
+
                     , ut1.item_name as ut1_name, ut1.item_comt as ut1_comt, ut1.icon_file as ut1_file, ut1.icon_x as ut1_x, ut1.icon_y as ut1_y
+                    , ut1.item_comt_02 as ut1_comt_02, ut1.item_comt_03 as ut1_comt_03, ut1.item_comt_04 as ut1_comt_04
+
                     , ut2.item_name as ut2_name, ut2.item_comt as ut2_comt, ut2.icon_file as ut2_file, ut2.icon_x as ut2_x, ut2.icon_y as ut2_y
+                    , ut2.item_comt_02 as ut2_comt_02, ut2.item_comt_03 as ut2_comt_03, ut2.item_comt_04 as ut2_comt_04
+
                     , ut3.item_name as ut3_name, ut3.item_comt as ut3_comt, ut3.icon_file as ut3_file, ut3.icon_x as ut3_x, ut3.icon_y as ut3_y
+                    , ut3.item_comt_02 as ut3_comt_02, ut3.item_comt_03 as ut3_comt_03, ut3.item_comt_04 as ut3_comt_04
+
                     , ut4.item_name as ut4_name, ut4.item_comt as ut4_comt, ut4.icon_file as ut4_file, ut4.icon_x as ut4_x, ut4.icon_y as ut4_y
+                    , ut4.item_comt_02 as ut4_comt_02, ut4.item_comt_03 as ut4_comt_03, ut4.item_comt_04 as ut4_comt_04
+
                     ,  sw.item_name as  sw_name,  sw.item_comt as  sw_comt,  sw.icon_file as  sw_file,  sw.icon_x as  sw_x,  sw.icon_y as  sw_y
+                    ,  sw.item_comt_02 as  sw_comt_02, sw.item_comt_03 as  sw_comt_03, sw.item_comt_04 as  sw_comt_04
                   FROM
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'UW') uw
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'UW') uw
                   LEFT OUTER JOIN
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'UT1') ut1
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'UT1') ut1
                     ON uw.char_id = ut1.char_id
 
                   LEFT OUTER JOIN
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'UT2') ut2
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'UT2') ut2
                     ON uw.char_id = ut2.char_id
 
                   LEFT OUTER JOIN
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'UT3') ut3
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'UT3') ut3
                     ON uw.char_id = ut3.char_id
 
                   LEFT OUTER JOIN
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'UT4') ut4
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'UT4') ut4
                     ON uw.char_id = ut4.char_id
 
                   LEFT OUTER JOIN
-                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y FROM tb_comn_item WHERE item_type = 'SW') sw
+                (SELECT char_id, item_type, item_name, item_comt, icon_file, icon_x, icon_y, item_comt_02, item_comt_03, item_comt_04 FROM tb_comn_item WHERE item_type = 'SW') sw
                     ON uw.char_id = sw.char_id
             ) item
         ON ch.char_id = item.char_id
