@@ -227,13 +227,9 @@ var BOOK00_CHARITEM = function(){
         var s3config = commParam.variables.s3config;
 
         if(data.length > 0){
-            /*
-            htmlTextIcon = htmlTextIcon + "<ul>";
-            */
 
             $.each(data, function (index, map) {
 
-                /*<div class="swiper-slide" style="background-image:url(./images/nature-1.jpg)"></div>*/
                 htmlTextBook =  htmlTextBook
                              + "<div class='swiper-slide' id='charInfoDiv"+index+"'> "
                                  + "<table class='infoTable table table-striped'>"
@@ -390,17 +386,8 @@ var BOOK00_CHARITEM = function(){
 
                                     + "</tbody>"
                                  + "</table>"
-                                 
-//                                 + "<div class='thumbImgDiv' "
-//                                 + " style='background:url(" +s3config.ci_s3_path + map.icon_file + ") "
-//                                 + ( (parseInt(map.icon_x) - 1) * parseInt(s3config.ci_width) - 1) * -1 + "px "
-//                                 + ( (parseInt(map.icon_y) - 1) * parseInt(s3config.ci_height) + 1 + parseInt(s3config.ci_padding_top)) * -1 + "px;"
-//                                 +        "'"
-//                                 + ">"
-//                                 + "</div>"
                              + "</div>";
 
-                /*<div class="swiper-slide" style="background-image:url(./images/nature-1.jpg)"></div>*/
                 htmlTextIcon =  htmlTextIcon
                              + "<div class='swiper-slide'> "
                                  + "<div class='thumbImgDiv' "
@@ -413,15 +400,17 @@ var BOOK00_CHARITEM = function(){
                              + "</div>";
             });
 
-            /*
-            htmlTextIcon = htmlTextIcon + "</ul>";
-            */
+            if(galleryThumbs){
+                galleryThumbs.destroy();
+            }
+            if(galleryTop){
+                galleryTop.destroy();
+            }
 
             $('#galleryTopDiv').html(htmlTextBook);
             $('#galleryThumbsDiv').html(htmlTextIcon);
 
-
-                galleryThumbs = new Swiper('.gallery-thumbs', {
+            galleryThumbs = new Swiper('.gallery-thumbs', {
                   spaceBetween: 10,
                   loop : true,
                   slidesPerView: 'auto',
@@ -430,7 +419,7 @@ var BOOK00_CHARITEM = function(){
                   watchSlidesVisibility: true,
                   watchSlidesProgress: true,
                 });
-                galleryTop = new Swiper('.gallery-top', {
+            galleryTop = new Swiper('.gallery-top', {
                   spaceBetween: 10,
                   loop : true,
                   loopedSlides: 6, //looped slides should be the same
