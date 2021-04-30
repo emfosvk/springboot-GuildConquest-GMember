@@ -301,7 +301,7 @@ var BOOK00_CHARITEM = function(){
                                                 +"<table class='swTable'>"
                                                 +	"<colgroup>"
                                                 +       "<col width='100'>"
-                                                +       "<col width='521'>"
+                                                +       "<col>"
                                                 +   "</colgroup>"
                                                 +	"<tbody>"
                                                 +		"<tr >"
