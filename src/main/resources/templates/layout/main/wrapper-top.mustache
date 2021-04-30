@@ -41,7 +41,31 @@
                                 <a href="/logout" class="btn btn-info active" role="button">Logout</a>
                             {{/userInfo}}
                             {{^userInfo}}
-                                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button" >Google Login</a>
+                                <a href="/oauth2/authorization/kakao" > <div id="kakaoLoginBtn"></div></a>
+                                <a href="/oauth2/authorization/google"><div id="googleLoginBtn"></div></a>
+                                <style>
+                                    #kakaoLoginBtn{
+                                        background-image: url('/img/button/kakao_login_medium_narrow.png');
+                                        background-repeat: no-repeat;
+                                        background-size: contain;
+                                        width:167px;
+                                        height:41px;
+                                        display : inline-block;
+                                        margin : 0px 1px 2px 0px;
+                                    }
+                                    #googleLoginBtn{
+                                        background-image: url('/img/button/btn_google_signin_dark_normal_web.png');
+                                        width:191px;
+                                        height:46px;
+                                        display : inline-block;
+                                    }
+                                    #googleLoginBtn:hover{
+                                        background-image: url('/img/button/btn_google_signin_dark_focus_web.png');
+                                    }
+                                    #googleLoginBtn:active{
+                                        background-image: url('/img/button/btn_google_signin_dark_pressed_web.png');
+                                    }
+                                </style>
                             {{/userInfo}}
                         </div>
                     </li>

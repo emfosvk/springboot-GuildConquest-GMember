@@ -423,6 +423,7 @@ var BOOK00_CHARITEM = function(){
 
                 galleryThumbs = new Swiper('.gallery-thumbs', {
                   spaceBetween: 10,
+                  loop : true,
                   slidesPerView: 'auto',
                   freeMode: true,
                   loopedSlides: 6, //looped slides should be the same
@@ -431,6 +432,7 @@ var BOOK00_CHARITEM = function(){
                 });
                 galleryTop = new Swiper('.gallery-top', {
                   spaceBetween: 10,
+                  loop : true,
                   loopedSlides: 6, //looped slides should be the same
                   navigation: {
                     nextEl: '.swiper-button-next',
