@@ -10,6 +10,7 @@ import java.util.Map;
 public interface Book00Mapper {
 
     // comn code
-    public List<Map> selectListBookCharEquip(ToastGridParamDto searchMap);
+    public List<Map> selectListBookCharEquip(Map<String, Object> commandMap);
+    public List<Map> selectListEtcItem(Map<String, Object> commandMap);
 
 }

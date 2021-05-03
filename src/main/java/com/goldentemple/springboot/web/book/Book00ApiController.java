@@ -23,10 +23,20 @@ public class Book00ApiController {
     private final Book00Service book00Service;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping("/book/api/searchCharItem.api")
-    public Map<String, Object> searchCharItem(ToastGridParamDto searchMap){
+    @PostMapping("/book/api/searchCharItem.api")
+    public Map<String, Object> searchCharItem(@RequestParam Map<String, Object> commandMap){
+        String paramStr1 = String.valueOf(commandMap.get("paramStr1"));
 
-        List<Map> searchResult = book00Service.selectListBookCharEquip(searchMap);
+        List<Map> searchResult;
+
+        switch (paramStr1) {
+            case "AF" :
+                searchResult = book00Service.selectListEtcItem(commandMap);
+                break;
+
+            default:
+                searchResult = book00Service.selectListBookCharEquip(commandMap);
+        }
 
         HashMap<String, Object> rtnMap   = new HashMap<String, Object>();
 

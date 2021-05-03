@@ -20,10 +20,15 @@ public class Book00Service extends CustmJavaUtils {
     private final Book00Mapper book00Mapper;
 
     @Transactional(readOnly = true)
-    public List<Map> selectListBookCharEquip(ToastGridParamDto searchMap){
+    public List<Map> selectListBookCharEquip(Map<String, Object> commandMap){
        //mybatis
-       return book00Mapper.selectListBookCharEquip(searchMap);
+       return book00Mapper.selectListBookCharEquip(commandMap);
     }
 
+    @Transactional(readOnly = true)
+    public List<Map> selectListEtcItem(Map<String, Object> commandMap){
+        //mybatis
+        return book00Mapper.selectListEtcItem(commandMap);
+    }
 
 }

@@ -14,11 +14,11 @@ var BOOK00_CHARITEM = function(){
 
 	/* ********************** [END] variables ****************** */
 
-    var toastGrid, toastGridCols;
-    var $selBoxTypeCode, selBoxTypeCode;
-    var rollingInfo, rollingIcon;
-    var galleryTop, galleryThumbs;
+    var selBoxTypeCode;
+    var galleryTop, galleryThumbs, galleryetcEtcItem;
 
+    let pos = { top: 0, left: 0, x: 0, y: 0 };
+    var elementEtcItemSection, etcItemDiv;
 	/* ********************** [START] page load ****************** */
 	/**
 	 * @author Rosa, 2021-04-28
@@ -74,8 +74,14 @@ var BOOK00_CHARITEM = function(){
         selBoxTypeCode = new tui.SelectBox('#frmS_paramStr1', {
                            data: [
                              {
-                               label: 'Class',
+                               label: 'Charater',
                                data: commParam.variables.classList
+                             },
+                             {
+                               label: 'Etc Item',
+                               data: [
+                                {label : '유물', value: 'AF'}
+                                ]
                              }
                            ],
                            autofocus: true
@@ -125,28 +131,26 @@ var BOOK00_CHARITEM = function(){
 	 */
 	var fn_BOOK00_CHARITEM_btnEvent_search = function(e){
 
-        //var searchOption = $('#frmS').formSerialize(true);
+        var searchOption = $('#frmS').formSerialize(true);
         var typeCode = selBoxTypeCode.getSelectedItem();
-        var paramStr1 = typeCode.value;
-        //toastGrid.readData(1, searchOption, true);
+        searchOption.paramStr1 = typeCode.value;
 
         $.ajax({
-            url: searchListBOOK00_CHARITEM_URL + '?' + 'paramStr1=' + paramStr1, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-            data: { name: "홍길동" }, // HTTP 요청과 함께 서버로 보낼 데이터
-            method: "GET", // HTTP 요청 메소드(GET, POST 등)
+            url: searchListBOOK00_CHARITEM_URL, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+            data: searchOption, // HTTP 요청과 함께 서버로 보낼 데이터
+            method: "POST", // HTTP 요청 메소드(GET, POST 등)
             dataType: "json" // 서버에서 보내줄 데이터의 타입
 
-        }).done(function(json) {
+        }).done(function(jsonResult) {
             console.log('성공');
-            console.log(json);
-            fn_BOOK00_CHARITEM_createRolling(json);
+            console.log(jsonResult);
+            fn_BOOK00_CHARITEM_ajaxCallback('btnSearch', jsonResult, searchOption);
+
         }).fail(function(xhr, status, errorThrown) {
             console.log('에러');
             console.log(xhr);
             console.log(status);
             console.log(errorThrown);
-
-            $("#text").html("오류가 발생했다.<br>") .append("오류명: " + errorThrown + "<br>") .append("상태: " + status);
 
         }).always(function(xhr, status) {
             console.log('항상');
@@ -215,14 +219,162 @@ var BOOK00_CHARITEM = function(){
         $('input:radio[name=paramStr2]:input[value=' + 'A' + ']').attr("checked", true);
 	}
 
+    var fn_BOOK00_CHARITEM_ajaxCallback = function(fromAjaxEvent, jsonResult, searchOption){
+        if(jsonResult != null){
+            switch(fromAjaxEvent){
+                case 'btnSearch' :
+                    if (searchOption.paramStr1){
+                        switch(searchOption.paramStr1){
+                            case 'AF' :
+                                $('#charItemSection').addClass('itemSection_display_none');
+                                $('#etcItemSection').removeClass('itemSection_display_none');
+                                fn_BOOK00_CHARITEM_etcItemSection(jsonResult, searchOption.paramStr1);
+                            break;
+                            default :
+                                $('#etcItemSection').addClass('itemSection_display_none');
+                                $('#charItemSection').removeClass('itemSection_display_none');
+                                fn_BOOK00_CHARITEM_charItemSection(jsonResult, searchOption.paramStr1);
+
+                        }
+                    }
+                break;
+
+                default :
+
+            }
+        }
+    }
+
+    /**
+     * @author Rosa, 2021-05-01
+     * @method fn_BOOK00_CHARITEM_etcItemSection
+     * @process custom event
+     */
+    var fn_BOOK00_CHARITEM_etcItemSection = function(jsonResult, equipType){
+        var data = jsonResult.data;
+        var htmlTextBook = ''; // 우측 표기될 도감 내용
+        var htmlTextIcon = ''; // 좌측 표기될 아이콘
+        var s3config = commParam.variables.s3config;
+
+        var s3_path = '';
+        var s3_padding_top = '';
+        var s3_width = '';
+        var s3_height = '';
+        var borderLinePx = 3;
+        var borderLineColor = '#CECEF6';
+
+        switch(equipType){
+            case 'AF':
+                s3_path = s3config.af_s3_path;
+                s3_padding_top = s3config.af_padding_top;
+                s3_width = s3config.af_width;
+                s3_height = s3config.af_height;
+            break;
+            default:
+                s3_path = s3config.af_s3_path;
+                s3_padding_top = s3config.af_padding_top;
+                s3_width = s3config.af_width;
+                s3_height = s3config.af_height;
+            break;
+        }
+
+
+        if(data.length > 0){
+
+            $.each(data, function (index, map) {
+
+                htmlTextIcon =  htmlTextIcon
+                                 + "<div "
+                                 + "id='" + "etcItemIcon"+ index + "' "
+                                 + "data-order-num='" +  index + "' "
+                                 + "class='thumbImgDiv etcItemIcon' "
+                                 + " style='background:url(" + s3_path + map.icon_file + ") "
+                                 + ( (parseInt(map.icon_x) - 1) * parseInt(s3_width) ) * -1 + "px "
+                                 + ( (parseInt(map.icon_y) - 1) * parseInt(s3_height) + parseInt(s3_padding_top)) * -1 + "px;"
+                                 + "'"
+                                 + ">"
+                                 + "</div>";
+
+                htmlTextBook =  htmlTextBook
+                             + "<div class='swiper-slide' id='charInfoDiv"+index+"'> "
+                                + "<table class='etcItemComtTable'>"
+                                    + "<colgroup>"
+                                        + "<col style='width:144px; '>"
+                                        + "<col style='width:calc(100% - 150px); '>"
+                                    + "</colgroup>"
+                                    + "<tbody>"
+                                        + "<tr class ='etcItemComtTr"
+                                        + ((index % 2 == 1)? "Odd" : "Even") // Unique Weapon Row
+                                        + "'>"
+                                            + "<td class='etcItemComtCol1'>"
+                                                + "<div "
+                                                + "id='" + "etcItemComtIcon"+ (index + 1) + "' "
+                                                + "class='thumbImgDiv etcItemComtIcon' "
+                                                + " style='background:url(" + s3_path + map.icon_file + ") "
+                                                + ( (parseInt(map.icon_x) - 1) * parseInt(s3_width) ) * -1 + "px "
+                                                + ( (parseInt(map.icon_y) - 1) * parseInt(s3_height) + parseInt(s3_padding_top)) * -1 + "px;"
+                                                + "'"
+                                                + ">"
+                                                + "</div>"
+                                                + "<br>"
+                                                + "<span class='etcItemComtCol1-ItemName'>" + map.item_name + "</span>"
+                                            +"</td>"
+                                            + "<td class='etcItemComtCol3'>"+ map.item_comt +"</td>"
+                                        + "</tr>"
+                                    + "</tbody>"
+                                + "</table>"
+                             + "</div>"
+
+            });
+
+            if(galleryetcEtcItem){
+                galleryetcEtcItem.destroy();
+            }
+
+            $('#galleryEtcItemDiv').html(htmlTextBook);
+            $('#etcItemIconSection').html(htmlTextIcon);
+
+            $('.etcItemIcon').css({
+                  "width":  (parseInt(s3_width) + borderLinePx * 2 - 2) + "px"
+                , "height": (parseInt(s3_height) + borderLinePx * 2 - 2) + "px"
+                , "border": borderLinePx + "px " + "solid " + borderLineColor
+            });
+
+            $('.etcItemComtIcon').css({
+                  "width":  s3_width + "px"
+                , "height": s3_height + "px"
+            });
+
+            galleryetcEtcItem = new Swiper(".gallery-etcItem", {
+                  direction: "vertical",
+                  slidesPerView: 4,
+                  freeMode: true,
+                  mousewheel: true
+            });
+
+            elementEtcItemSection = document.getElementById('etcItemIconSection');
+            etcItemDiv = document.getElementsByClassName('etcItemIcon');
+
+            // Attach the handler
+            elementEtcItemSection.addEventListener('mousedown', fn_BOOK00_CHARITEM_mouseDownHandler);
+            for (let i=0; i<etcItemDiv.length; i++){
+                etcItemDiv[i].addEventListener('click', fn_BOOK00_CHARITEM_ectItemClickEvent);
+            }
+
+            galleryetcEtcItem.on('activeIndexChange', fn_BOOK00_CHARITEM_ectItemComtChangeEvent);
+
+        }
+    }
+
 	/**
 	 * @author Rosa, 2021-04-28
-	 * @method fn_BOOK00_CHARITEM_createRolling
+	 * @method fn_BOOK00_CHARITEM_createCharItemSection
 	 * @process custom event
 	 */
-	var fn_BOOK00_CHARITEM_createRolling = function(json){
-        var data = json.data;
+	var fn_BOOK00_CHARITEM_charItemSection = function(jsonResult, equipType){
+        var data = jsonResult.data;
         var htmlTextBook = ''; // 상단 표기될 도감 내용
+
         var htmlTextIcon = ''; // 하단 표기될 아이콘
         var s3config = commParam.variables.s3config;
 
@@ -240,7 +392,7 @@ var BOOK00_CHARITEM = function(){
                                         + "<col style='width:120px';>"
                                         + "<col style='width:500px'>"
                                     + "<tbody>"
-                                        + "<tr>" // Unique Weapon Row
+                                        + "<tr>"
                                             + "<td rowspan='6' class='charPortTD'>"
                                                 + "<div class='chatPortImgDiv' "  // Portrait Image
                                                 + " style='background:url(" +s3config.cp_s3_path + map.port_file + ") "
@@ -456,12 +608,83 @@ var BOOK00_CHARITEM = function(){
                     swiper: galleryThumbs,
                   },
                 });
-
         }
 
-
-
 	}
+
+    var fn_BOOK00_CHARITEM_mouseDownHandler = function(e) {
+
+        elementEtcItemSection.style.cursor = 'grabbing';
+        elementEtcItemSection.style.userSelect = 'none';
+
+        pos = {
+            left: elementEtcItemSection.scrollLeft,
+            top: elementEtcItemSection.scrollTop,
+            // Get the current mouse position
+            x: e.clientX,
+            y: e.clientY,
+        };
+
+        document.addEventListener('mousemove', fn_BOOK00_CHARITEM_mouseMoveHandler);
+        document.addEventListener('mouseup', fn_BOOK00_CHARITEM_mouseUpHandler);
+    };
+
+    var fn_BOOK00_CHARITEM_mouseMoveHandler = function(e) {
+        // How far the mouse has been moved
+        const dx = e.clientX - pos.x;
+        const dy = e.clientY - pos.y;
+
+        // Scroll the element
+        elementEtcItemSection.scrollTop = pos.top - dy;
+        elementEtcItemSection.scrollLeft = pos.left - dx;
+    };
+
+    var fn_BOOK00_CHARITEM_mouseUpHandler = function() {
+        elementEtcItemSection.style.cursor = 'grab';
+        elementEtcItemSection.style.removeProperty('user-select');
+
+        document.removeEventListener('mousemove', fn_BOOK00_CHARITEM_mouseMoveHandler);
+        document.removeEventListener('mouseup', fn_BOOK00_CHARITEM_mouseUpHandler);
+    };
+
+    var fn_BOOK00_CHARITEM_ectItemClickEvent = function(e){
+    	var id = e.toElement.id;
+    	var selIconDiv = $('#'+id);
+        var selNum = selIconDiv.data('order-num');
+
+    	$('.etcItemIcon').removeClass('etcItemIcon-active');
+    	selIconDiv.addClass('etcItemIcon-active');
+
+        galleryetcEtcItem.slideTo(selNum, 1000, false);
+
+    };
+
+    var fn_BOOK00_CHARITEM_ectItemComtChangeEvent = function(e){
+
+        var comnGalIndex = galleryetcEtcItem.activeIndex;
+        $('.etcItemIcon').removeClass('etcItemIcon-active');
+        $('.etcItemIcon[data-order-num='+comnGalIndex+']').addClass('etcItemIcon-active');
+
+        var iconY = $('.etcItemIcon[data-order-num='+comnGalIndex+']').offset().top;
+        var iconHeight = $('.etcItemIcon[data-order-num='+comnGalIndex+']').height();
+        var iconBorderTop = parseInt($('.etcItemIcon[data-order-num='+'1'+']').css('border-top-width').split('px')[0]);
+        var iconBorderBottom = parseInt($('.etcItemIcon[data-order-num='+'1'+']').css('border-bottom-width').split('px')[0]);
+        var iconTotalHeight = iconHeight + iconBorderTop + iconBorderBottom;
+
+        var sectionY = $('#etcItemIconSection').offset().top;
+        var sectionHeight = $('#etcItemIconSection').height();
+
+        var relativeY = iconY - sectionY;
+        var MaxbottomY = sectionHeight - iconTotalHeight;
+        var nowScrollPosition = $('#etcItemIconSection').scrollTop();
+
+        if(relativeY < 0){
+            $('#etcItemIconSection').stop().animate({scrollTop:nowScrollPosition + relativeY, duration:100});
+        } else if (relativeY > MaxbottomY){
+            $('#etcItemIconSection').stop().animate({scrollTop:nowScrollPosition + relativeY - MaxbottomY, duration:100});
+        }
+
+    };
 
 	/* ********************** [END] user defined function ****************** */
 

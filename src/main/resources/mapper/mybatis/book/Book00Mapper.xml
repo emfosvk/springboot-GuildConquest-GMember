@@ -5,7 +5,7 @@
 
     <!-- [START - INFO00_CHAR_ITEM ] Book of Char Item -->
 
-    <select id="selectListBookCharEquip" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+    <select id="selectListBookCharEquip" resultType="java.util.HashMap">
         SELECT
               ch.char_id, ch.char_name, ch.char_nickname, ch.class, ch.class_name, ch.atk_type, ch.atk_type_name
             , ch.icon_file, ch.icon_x, ch.icon_y, ch.port_file, ch.port_x, ch.port_y
@@ -71,10 +71,18 @@
         ON ch.char_id = item.char_id
     </select>
 
-    <!-- [E N D - COMN00_CLASS] Common code Class Setting -->
-
-    <!-- [START - COMN00_CODE] Common code Setting -->
-
-    <!-- [E N D - COMN00_CODE] Common code Setting -->
-
+    <select id="selectListEtcItem" resultType="java.util.HashMap">
+        SELECT
+              item_type
+            , item_name
+            , item_comt
+            , icon_file
+            , icon_x
+            , icon_y
+            , item_comt_02
+            , item_comt_03
+            , item_comt_04
+         FROM tb_comn_item
+        WHERE item_type LIKE #{paramStr1}
+    </select>
 </mapper>

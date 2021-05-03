@@ -8,6 +8,9 @@
     {{#userCertiYN}}
 
 <style>
+    .itemSection_display_none{
+        display : none;
+    }
 
     .infoTable td{
         vertical-align : middle;
@@ -38,6 +41,13 @@
         color: rgb(255, 255, 255);
         text-align: center; height: 21px;
     }
+    .swTableTD2 {
+        border-right: 2px solid rgb(0, 0, 0);
+        border-bottom: 1px solid rgb(0, 0, 0);
+        padding: 2px 3px;
+        vertical-align: middle;
+    }
+
     .swTableTD2 {
         border-right: 2px solid rgb(0, 0, 0);
         border-bottom: 1px solid rgb(0, 0, 0);
@@ -124,6 +134,89 @@
       opacity: 0.4;
     }
 
+    #etcItemSection{
+        height : 600px;
+    }
+
+    #etcItemIconSection {
+        overflow-y :scroll ;
+        cursor: grab;
+        overflow: auto;
+        text-align : center;
+        height : 100%;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    #etcItemIconSection::-webkit-scrollbar {
+      display: none;
+    }
+
+    #etcItemIconSection .etcItemIcon{
+        display : inline-block;
+        vertical-align: bottom;
+    }
+
+    #etcItemIconSection .etcItemIcon:not(.etcItemIcon-active) {
+      opacity: 0.7;
+    }
+
+    #etcItemIconSection .etcItemIcon:not(.etcItemIcon-active):hover {
+      opacity: 1;
+    }
+    #etcItemIconSection .etcItemIcon:has(.etcItemIcon-active)  {
+      opacity: 1;
+    }
+
+    .etcItemComtTable {
+        width: calc(100% - 10px);
+        height:150px;
+        margin: 0px 5px;
+    }
+
+    .etcItemComtCol1{
+        height:150px;
+        padding: 0px 3px 0px 3px;
+        vertical-align:middle;
+        text-align:center;
+    }
+    .etcItemComtIcon{
+        display: inline-block;
+    }
+
+    .etcItemComtCol1-ItemName{
+        font-weight: bold;
+        font-size: 14pt;
+    }
+
+    .etcItemComtCol2{
+        height:150px;
+        padding: 0px 2px;
+        vertical-align:middle;
+        font-weight: bold;
+        font-size: 14pt;
+    }
+
+    .etcItemComtCol3{
+        height:150px;
+        padding: 0px 5px;
+        vertical-align:middle;
+        font-size: 10pt;
+        line-height : 12pt;
+    }
+
+    .etcItemComtTrOdd{
+        background-color: rgba(0,0,0,.05);
+    }
+
+    .etcItemComtTrEven{
+        background-color: rgba(0,0,0,0);
+    }
+    .etcItemComtIcon{
+
+    }
+
 </style>
 
         <div class="container">
@@ -159,7 +252,8 @@
                 </form>
             </div>
             -->
-            <div class="row screenContent" style="height : 800px;">
+
+            <div id='charItemSection' class="row screenContent itemSection_display_none">
                 <div class="swiper-container gallery-thumbs">
                     <div id='galleryThumbsDiv' class="swiper-wrapper">
                         <!--
@@ -178,7 +272,16 @@
                     <div class="swiper-button-prev swiper-button-blue"></div>
                 </div>
             </div>
+            <div id='etcItemSection' class="row screenContent itemSection_display_none">
+                <div id="etcItemIconSection" class="col-sm-4">
+                </div>
+                <div id="etcItemComtSection" class="col-sm-8 swiper-container gallery-etcItem">
+                    <div id='galleryEtcItemDiv' class="swiper-wrapper">
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     {{/userCertiYN}}
     {{^userCertiYN}}
