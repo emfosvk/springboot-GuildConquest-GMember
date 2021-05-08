@@ -3,12 +3,16 @@
     <!-- Sidebar -->
     <div class="bg-light border-light" id="sidebar-wrapper">
         <div class="sidebar-heading"><a href="/" class="list-group-item-action bg-light">Home</a></div>
-        <div class="list-group list-group-flush">
+        <div id="mainSideBarMenuList" class="list-group list-group-flush">
+<!--
             <a href="/vw/book00_charItem.vw" class="list-group-item list-group-item-action bg-light">Book of Equipment</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Screen 2</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Screen 3</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Screen 4</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Screen 5</a>
+            <br/>
+            <a href="/vw/guld00_member.vw" class="list-group-item list-group-item-action bg-light">Register G.Member</a>
+            <a href="/vw/guld00_guild.vw" class="list-group-item list-group-item-action bg-light">Register Guild</a>
             <br/>
             <a href="/vw/comn00_char.vw" class="list-group-item list-group-item-action bg-light">Character Setting</a>
             <a href="/vw/comn00_item.vw" class="list-group-item list-group-item-action bg-light">Item Setting</a>
@@ -17,6 +21,7 @@
             <a href="/vw/comn00_class.vw" class="list-group-item list-group-item-action bg-light">Code Class Setting</a>
             <br/>
             <a href="/vw/toastgrid.vw" class="list-group-item list-group-item-action bg-light">UI Template</a>
+-->
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -42,7 +47,7 @@
                             {{/userInfo}}
                             {{^userInfo}}
                                 <a href="/oauth2/authorization/kakao" > <div id="kakaoLoginBtn"></div></a>
-                                <a href="/oauth2/authorization/google"><div id="googleLoginBtn"></div></a>
+                                <!--<a href="/oauth2/authorization/google"><div id="googleLoginBtn"></div></a>-->
                                 <style>
                                     #kakaoLoginBtn{
                                         background-image: url('/img/button/kakao_login_medium_narrow.png');
@@ -79,12 +84,16 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Menu List
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div id="mainDropdownMenuList" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+<!--
                             <a class="dropdown-item" href="/vw/book00_charItem.vw">Book of Equipment</a>
                             <a class="dropdown-item" href="#">Screen 2</a>
                             <a class="dropdown-item" href="#">Screen 3</a>
                             <a class="dropdown-item" href="#">Screen 4</a>
                             <a class="dropdown-item" href="#">Screen 5</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/vw/guld00_member.vw">Register G.Member</a>
+                            <a class="dropdown-item" href="/vw/guld00_guild.vw">Register Guild</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/vw/comn00_char.vw">Character Setting</a>
                             <a class="dropdown-item" href="/vw/comn00_item.vw">Item Setting</a>
@@ -93,6 +102,7 @@
                             <a class="dropdown-item" href="/vw/comn00_code.vw">Comn Code Setting</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/vw/toastgrid.vw">UI Template</a>
+-->
                         </div>
                     </li>
                 </ul>

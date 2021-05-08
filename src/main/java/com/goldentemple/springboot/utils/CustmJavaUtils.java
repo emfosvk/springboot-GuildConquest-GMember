@@ -13,6 +13,9 @@ public class CustmJavaUtils {
 
     protected boolean checkIsNotNullObject(Object param) throws Exception
     {
+        if(param == null){
+            return false;
+        }
         return true;
     }
 
@@ -47,7 +50,7 @@ public class CustmJavaUtils {
     }
 
     //list 처리
-    protected JSONArray convertListToJson(List<Map> list) {
+    public JSONArray convertListToJson(List<Map> list) {
 
         JSONArray jsonArray = new JSONArray();
         for (Map<String, Object> map : list) {

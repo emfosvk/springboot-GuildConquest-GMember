@@ -52,7 +52,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         logger.debug(">>>>>>> [BEFORE] >> loadUser > saveOrUpdate");
 
         User uuser;// = saveOrUpdate(attributes);
-        HashMap user = saveOrUpdate(attributes);
+        HashMap user = saveOrUpdate(attributes, registrationId);
         logger.debug(">>>>>>> [AFTER ] >> loadUser > saveOrUpdate");
         SessionUser ssUser = new SessionUser(user);
         httpSession.setAttribute("user", ssUser);
@@ -66,17 +66,24 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private HashMap saveOrUpdate(OAuthAttributes attributes){
+    private HashMap saveOrUpdate(OAuthAttributes attributes, String registrationId){
 //        User user = userRepository.findByEmail(attributes.getEmail())
 //                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
 //                .orElse(attributes.toEntity());
         HashMap<String, Object> searchMap = new HashMap();
 
+        searchMap.put("kakao_id", attributes.getKakao_id());
         searchMap.put("email", attributes.getEmail());
 
         logger.debug(">>>>>>> [BEFORE] >> saveOrUpdate > selectUserByEmail");
 
-        HashMap userinfo = user00Mapper.selectUserByEmail(searchMap);
+        HashMap userinfo;
+
+        //if("kakao".equals(registrationId)){
+            userinfo = user00Mapper.selectUserByKakaoId(searchMap);
+        //} else {
+        //    userinfo = user00Mapper.selectUserByEmail(searchMap);
+        //}
 
         logger.debug(">>>>>>> [AFTER ] >> saveOrUpdate > selectUserByEmail");
 
@@ -96,6 +103,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         userinfo.put("email",  attributes.getEmail());
         userinfo.put("name", attributes.getName());
         userinfo.put("picture", attributes.getPicture());
+        userinfo.put("kakao_id",  attributes.getKakao_id());
         userinfo.put("created_date", nowTime);
         userinfo.put("modified_date", nowTime);
 
@@ -104,13 +112,25 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         if("I".equals(mergeMode)){
             user00Mapper.insertUser(userinfo);
         } else {
-            user00Mapper.updateUser(userinfo);
+        //    if("kakao".equals(registrationId)){
+                user00Mapper.updateUserByKakaoId(userinfo);
+        //    } else {
+        //        user00Mapper.updateUserByEmail(userinfo);
+        //    }
         }
 
         logger.debug(">>>>>>> [AFTER ] >> saveOrUpdate > insertUser or updateUser");
         logger.debug(">>>>>>> [BEFORE] >> saveOrUpdate > selectUser");
 
-        HashMap newUserinfo = user00Mapper.selectUser(searchMap);
+        HashMap newUserinfo;
+
+        //if("kakao".equals(registrationId)){
+            newUserinfo = user00Mapper.selectUserByKakaoId(searchMap);
+        //} else {
+        //    newUserinfo = user00Mapper.selectUserByEmail(searchMap);
+        //}
+
+
 
         logger.debug(">>>>>>> [AFTER ] >> saveOrUpdate > selectUser");
 

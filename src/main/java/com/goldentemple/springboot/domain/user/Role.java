@@ -7,15 +7,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 
-    GUEST("ROLE_GUEST", "방문자"),
-    MEMBER("ROLE_MEMBER", "길드원"),
-    MANAGER("ROLE_MANAGER", "관리자"),
-    MASTER("ROLE_MASTER", "길드마스터"),
-    ADMIN("ROLE_ADMIN", "시스템관리자")
+    GUEST("ROLE_GUEST", "방문자", "1"),
+    MEMBER("ROLE_MEMBER", "길드원", "3"),
+    MANAGER("ROLE_MANAGER", "관리자", "5"),
+    MASTER("ROLE_MASTER", "길드마스터", "7"),
+    ADMIN("ROLE_ADMIN", "시스템관리자", "9")
     ;
 
     private final String key;
     private final String title;
+    private final String accessLevel;
 
     public static Role fromString(String text) {
         text = "ROLE_" + text;

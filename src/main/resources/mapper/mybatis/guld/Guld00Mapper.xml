@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldentemple.springboot.domain.guld.Guld00Mapper">
+
+    <select id="selectListGuildForDropDown" parameterType="map" resultType="java.util.HashMap">
+        select distinct
+            value,
+            label,
+            text
+        from (
+            select
+                guild_id as value,
+                guild_name as label,
+                guild_name as text
+            from tb_guld_guild
+            where guild_id in ( select guild_id from tb_guld_member where user_id = #{paramLong1})
+              and use_yn = 'Y'
+            union all
+            select
+                guild_id as value,
+                guild_name as label,
+                guild_name as text
+                from tb_guld_guild
+            where '9' = #{paramStr1}
+              and use_yn = 'Y'
+             ) a
+    </select>
+
+    <!-- [START - GULD00_GUILD] Guild Setting -->
+
+    <select id="selectListGuild" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+          from (
+                select
+                    max(rownum) over() totalcount,
+                    guild_id,
+                    guild_name,
+                    use_yn
+                  from (
+                        select
+                            row_number() over() as rownum,
+                            guild_id,
+                            guild_name,
+                            use_yn
+                          from tb_guld_guild
+                        <where>
+                            <if test="paramStr1 != null and paramStr1 !=''">
+                                guild_name like CONCAT(#{paramStr1}, '%')
+                            </if>
+                        </where>
+                        ) a
+                 group by guild_id, guild_name, use_yn
+               ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+    <insert id="insertGuild">
+       insert into tb_guld_guild
+        (
+        guild_name,
+        use_yn,
+        first_reg_dt,
+        first_reg_user_id,
+        last_upd_dt,
+        last_upd_user_id
+        )
+        values
+        (
+         #{guild_name}
+        ,#{use_yn}
+        ,sysdate()
+        ,#{id}
+        ,sysdate()
+        ,#{id}
+        )
+    </insert>
+    <update id="updateGuild">
+        update tb_guld_guild
+        set guild_name = #{guild_name}
+           ,use_yn = #{use_yn}
+           ,last_upd_dt = sysdate()
+           ,last_upd_user_id = #{id}
+        where type_code = #{type_code}
+    </update>
+
+    <delete id="deleteGuild">
+        delete from tb_guld_guild
+        where use_yn = 'N'
+    </delete>
+
+    <!-- [E N D - GULD00_GUILD] Guild Setting -->
+
+    <!-- [START - GULD00_MEMBER] Guild Member Setting -->
+
+    <select id="selectListMember" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+          from (
+                select
+                    max(rownum) over() totalcount,
+                    guild_id,
+                    guild_id_hidden,
+                    member_id,
+                    member_name,
+                    member_role,
+                    use_yn
+                  from (
+                            select
+                                row_number() over() as rownum,
+                                m.guild_id,
+                                m.guild_id as guild_id_hidden,
+                                m.member_id,
+                                m.member_name,
+                                m.member_role,
+                                m.use_yn
+                            from tb_guld_member m
+                            where m.guild_id = #{paramStr1}
+                            <if test='paramStr2 != null and paramStr2 !=""and paramStr2 !="A"'>
+                                and use_yn like #{paramStr2}
+                            </if>
+                       ) a
+                group by guild_id, guild_id_hidden, member_id, member_name, member_role, use_yn
+               ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+
+
+    <insert id="insertMember">
+        insert into tb_guld_member
+        (
+            guild_id,
+            member_name,
+            member_role,
+            use_yn,
+            user_id,
+            first_reg_dt,
+            first_reg_user_id,
+            last_upd_dt,
+            last_upd_user_id
+        )
+        values
+        (
+              #{guild_id}
+            , #{member_name}
+            , #{member_role}
+            , #{use_yn}
+            , #{user_id}
+            , sysdate()
+            , #{id}
+            , sysdate()
+            , #{id}
+        )
+    </insert>
+    <update id="updateMember">
+        update tb_guld_member
+        set
+              member_name = #{member_name}
+            , member_role = #{member_role}
+            , use_yn      = #{use_yn}
+            , user_id     = #{user_id}
+            , last_upd_dt = sysdate()
+            , last_upd_user_id = #{id}
+        where member_id = #{member_id}
+    </update>
+
+    <update id="deleteMember">
+        delete from tb_guld_member
+        where member_id = #{member_id}
+    </update>
+
+    <!-- [E N D - GULD00_MEMBER] Guild Member Setting -->
+
+
+
+    <!-- [START - GULD00_CHAR_ITEM] Charater Item Mapping -->
+
+
+    <!-- [E N D - GULD00_CHAR_ITEM] Charater Item Mapping -->
+
+
+</mapper>

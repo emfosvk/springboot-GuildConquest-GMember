@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldentemple.springboot.domain.main.Main00Mapper">
+
+    <!-- [START - MAIN] Init Menu List -->
+
+    <select id="selectListMenuList" parameterType="map" resultType="java.util.HashMap">
+        SELECT
+              mg_order
+            , menu_order
+            , menu_level
+            , comn_code
+            , screen_name
+            , uri_path
+            , parent_menu_group
+            , row_type
+        FROM (
+                SELECT
+                      sort_order AS mg_order
+                    , 0 AS menu_order
+                    , 0 as menu_level
+                    , mg.comn_code
+                    , mg.comn_code_name as screen_name
+                    , NULL AS uri_path
+                    , NULL AS parent_menu_group
+                    , 'F' as row_type
+                  from tb_comn_code mg
+                 inner JOIN (
+                             SELECT
+                                attr_01
+                               FROM tb_comn_code
+                              WHERE type_code LIKE 'MENU_SCREEN'
+                                <if test="accessLevel != null and accessLevel !=''">
+                                    AND attr_03 <![CDATA[ <= ]]> #{accessLevel}
+                                </if>
+                                <if test="accessLevel == null or accessLevel ==''">
+                                    AND attr_03 <![CDATA[ <= ]]> '1'
+                                </if>
+                              GROUP BY attr_01
+                             ) sc_auth
+                    ON mg.comn_code = sc_auth.attr_01
+                 where mg.type_code LIKE 'MENU_GROUP'
+
+                UNION all
+
+                SELECT
+                mg.sort_order AS mg_order
+                , sc.sort_order AS menu_order
+                , 1 as menu_level
+                , sc.comn_code
+                , sc.comn_code_name as screen_name
+                , sc.attr_02 AS uri_path
+                , sc.attr_01 AS parent_menu_group
+                , 'S' as row_type
+                from tb_comn_code mg
+                inner JOIN tb_comn_code sc
+                ON mg.comn_code = sc.attr_01
+                where mg.type_code LIKE 'MENU_GROUP'
+                AND sc.type_code LIKE 'MENU_SCREEN'
+                <if test="accessLevel != null and accessLevel !=''">
+                    AND sc.attr_03 <![CDATA[ <= ]]> #{accessLevel}
+                </if>
+                <if test="accessLevel == null or accessLevel ==''">
+                    AND sc.attr_03 <![CDATA[ <= ]]> '1'
+                </if>
+        ) a
+        WHERE 1=1
+        ORDER BY mg_order, menu_order, menu_level
+    </select>
+
+    <select id="checkUriAuth" parameterType="map" resultType="java.util.HashMap">
+        SELECT case when attr_03 <![CDATA[ <= ]]>  #{accessLevel} then 'Y'
+          ELSE 'N' END AS access_yn
+          FROM tb_comn_code
+         WHERE type_code = 'MENU_SCREEN'
+           AND #{uri} LIKE CONCAT(attr_02, '%')
+           AND attr_02 IS NOT NULL
+         LIMIT 1
+    </select>
+    <!-- [E N D - MAIN] Init Menu List -->
+
+
+</mapper>

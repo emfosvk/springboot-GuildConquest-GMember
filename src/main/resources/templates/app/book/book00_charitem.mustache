@@ -4,8 +4,9 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 
-{{#userInfo}}
-    {{#userCertiYN}}
+<!--
+이 화면은 도감페이지이므로 모두에게 공개.
+-->
 
 <style>
     .itemSection_display_none{
@@ -283,15 +284,9 @@
         </div>
 
 
-    {{/userCertiYN}}
-    {{^userCertiYN}}
-        {{>layout/main/cert_no_permission}}
-    {{/userCertiYN}}
-
-{{/userInfo}}
-{{^userInfo}}
-    {{>layout/main/cert_no_login}}
-{{/userInfo}}
+<!--
+이 페이지는 도감 페이지 이므로 모두에게 공개.
+-->
 
 {{>layout/main/wrapper-bottom}}
 

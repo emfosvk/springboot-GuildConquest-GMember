@@ -3,6 +3,7 @@ package com.goldentemple.springboot.config;
 import com.goldentemple.springboot.config.auth.LoginUserArgumentResolver;
 import com.goldentemple.springboot.interceptor.CertificationInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -23,9 +24,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new CertificationInterceptor())
+        registry.addInterceptor(customInterceptor())
                 .addPathPatterns("/*", "/vw/*.vw")
                 .excludePathPatterns("/login/oauth2/**/*", "/login/oauth2/*"); //로그인 쪽은 예외처리를 한다.
+    }
+
+    @Bean
+    public CertificationInterceptor customInterceptor() {
+        return new CertificationInterceptor();
     }
 
 }

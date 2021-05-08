@@ -27,6 +27,9 @@ public class ToastGridParamDto {
     private Integer paramInt4;
     private Integer paramInt5;
 
+    private Long paramLong1;
+    private Long paramLong2;
+
     private List<Object> paramList1;
     private List<Object> paramList2;
 

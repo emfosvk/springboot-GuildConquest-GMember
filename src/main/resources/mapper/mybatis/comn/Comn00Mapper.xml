@@ -147,6 +147,7 @@
                     attr_03,
                     attr_04,
                     attr_05,
+                    sort_order,
                     use_yn
                   from (
                             select
@@ -160,6 +161,7 @@
                                 attr_03,
                                 attr_04,
                                 attr_05,
+                                sort_order,
                                 use_yn
                             from tb_comn_code
                             <where>
@@ -171,7 +173,7 @@
                                 </if>
                             </where>
                        ) a
-                group by type_code, comn_code, comn_code_name, comn_code_comt, use_yn,attr_01, attr_02, attr_03, attr_04, attr_05, use_yn
+                group by type_code, comn_code, comn_code_name, comn_code_comt, use_yn,attr_01, attr_02, attr_03, attr_04, attr_05, sort_order, use_yn
                ) aaa
 
         <if test="startRowNum != null and startRowNum !=''">
@@ -197,6 +199,7 @@
             attr_04,
             attr_05,
             use_yn,
+            sort_order,
             first_reg_dt,
             first_reg_user_id,
             last_upd_dt,
@@ -214,6 +217,7 @@
             , #{attr_04}
             , #{attr_05}
             , #{use_yn}
+            , #{sort_order}
             , sysdate()
             , #{id}
             , sysdate()
@@ -231,6 +235,7 @@
             , attr_04 = #{attr_04}
             , attr_05 = #{attr_05}
             , use_yn =  #{use_yn}
+            , sort_order = #{sort_order}
             , last_upd_dt = sysdate()
             , last_upd_user_id = #{id}
         where type_code = #{type_code}

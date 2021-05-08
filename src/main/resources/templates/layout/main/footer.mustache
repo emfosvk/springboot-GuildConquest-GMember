@@ -1,4 +1,24 @@
 
+
+<script src="/js/ui/main-menu.js"></script>
+
+<script>
+	$(document).ready(function(){
+		// send parameter to scirpt for java parameter
+        var mainMenuList = {{{mainMenuList}}};
+
+		var mainMenuParam = {
+			// session parameter
+			variables : {
+   			        "mainMenuList" : mainMenuList
+				}
+			};
+
+		main_menu.initialize(mainMenuParam);
+	});
+</script>
+
+
 <script src="/js/ui/main-sidebar.js"></script>
 <script src="/js/utils/gtCommonUtil.js"></script>
 

@@ -12,6 +12,7 @@
             email,
             name,
             picture,
+            kakao_id,
             role,
             modified_date
         from user
@@ -24,16 +25,31 @@
             </if>
         </where>
     </select>
+
     <select id="selectUserByEmail" resultType="java.util.HashMap">
         select
             id,
             email,
             name,
             picture,
+            kakao_id,
             role,
             modified_date
         from user
         where email = #{email}
+    </select>
+
+    <select id="selectUserByKakaoId" resultType="java.util.HashMap">
+        select
+        id,
+        email,
+        name,
+        picture,
+        kakao_id,
+        role,
+        modified_date
+        from user
+        where kakao_id = #{kakao_id}
     </select>
 
     <insert id="insertUser">
@@ -42,6 +58,7 @@
          email
         ,name
         ,picture
+        ,kakao_id
         ,role
         ,created_date
         ,modified_date
@@ -51,17 +68,27 @@
          #{email}
         ,#{name}
         ,#{picture}
+        ,#{kakao_id}
         ,#{role}
         ,#{created_date}
         ,#{modified_date}
         )
     </insert>
-    <update id="updateUser">
+
+    <update id="updateUserByEmail">
         update user
         set name = #{name}
            ,picture = #{picture}
            ,modified_date = #{modified_date}
         where email = #{email}
+    </update>
+
+    <update id="updateUserByKakaoId">
+        update user
+        set name = #{name}
+        ,picture = #{picture}
+        ,modified_date = #{modified_date}
+        where kakao_id = #{kakao_id}
     </update>
 
 </mapper>

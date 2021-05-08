@@ -74,7 +74,7 @@ var COMN00_CLASS = function(){
                                           // return value !== 11000
                                           if(value == '' || value == null){
                                             return false;
-                                          }else if (value.length > 10){
+                                          }else if (value.length > 15){
                                             return false;
                                           }
                                           return true;

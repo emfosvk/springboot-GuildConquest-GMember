@@ -307,7 +307,13 @@ var COMN00_CHAR = function(){
     var fn_COMN00_CHAR_btnEvent_new = function(e){
         console.log('신규버튼');
         console.log(toastGrid.getRowCount());
-        toastGrid.appendRow({});
+
+        var typeCodeSelItem = selBoxTypeCode.getSelectedItem();
+        var typeCode = (typeCodeSelItem) ? typeCodeSelItem.value : '';
+        toastGrid.appendRow({
+            "class" : typeCode
+            , "cq_use_yn" : 'Y'
+        });
     }
 
 	/**
