@@ -19,7 +19,7 @@ public class IndexControllerTest {
     @Test
     public void callMainPage(){
         //when
-        String body = this.restTemplate.getForObject("/", String.class);
+        //String body = this.restTemplate.getForObject("/", String.class);
 
         //when
         //assertThat(body).contains("스프링부트로 시작하는 웹서비스") ;
