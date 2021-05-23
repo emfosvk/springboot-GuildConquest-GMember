@@ -41,16 +41,16 @@ public class PostsApiControllerTest {
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private PostsRepository postsRepository;
-
-    @Autowired
-    private WebApplicationContext context;
-
-    private MockMvc mvc;
+//    @Autowired
+//    private TestRestTemplate restTemplate;
+//
+//    @Autowired
+//    private PostsRepository postsRepository;
+//
+//    @Autowired
+//    private WebApplicationContext context;
+//
+//    private MockMvc mvc;
 
     @Before
     public void setup() {

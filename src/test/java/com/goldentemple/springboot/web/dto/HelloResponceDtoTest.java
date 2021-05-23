@@ -7,13 +7,13 @@ public class HelloResponceDtoTest {
 
     @Test
     public void lombokActiveTest(){
-        String name = "test";
-        int amt = 1000;
-
-        HelloResponceDto dto = new HelloResponceDto(name, amt);
-
-        assertThat(dto.getName()).isEqualTo(name);
-        assertThat(dto.getAmt()).isEqualTo(amt);
+//        String name = "test";
+//        int amt = 1000;
+//
+//        HelloResponceDto dto = new HelloResponceDto(name, amt);
+//
+//        assertThat(dto.getName()).isEqualTo(name);
+//        assertThat(dto.getAmt()).isEqualTo(amt);
 
     }
 

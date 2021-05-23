@@ -24,25 +24,27 @@ public class PostsService {
 
     @Transactional
     public Long save(PostsSaveRequestDto rqDto){
-        return postsRepository.save(rqDto.toEntity()).getId();
+        //return postsRepository.save(rqDto.toEntity()).getId();
+        return null;
     }
 
     @Transactional
     public Long update(Long id, PostsSaveRequestDto rqDto){
-        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
-        posts.update(rqDto.getTitle(), rqDto.getContent());
-        return id;
+       // Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
+        //posts.update(rqDto.getTitle(), rqDto.getContent());
+        return null;
     }
 
     @Transactional
     public void delete(Long id){
-        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
-        postsRepository.delete(posts);
+        //Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
+        //postsRepository.delete(posts);
     }
 
     public PostsResponceDto findById(Long id){
-        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
-        return new PostsResponceDto(entity);
+        //Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. ID= " + id));
+        //return new PostsResponceDto(entity);
+        return null;
     }
 
 //    @Transactional(readOnly = true)
