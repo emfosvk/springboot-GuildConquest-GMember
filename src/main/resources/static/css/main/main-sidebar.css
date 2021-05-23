@@ -56,3 +56,51 @@
     margin-left: -15rem;
   }
 }
+
+.loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display:none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    text-align:center;
+    background-color : rgba(100,100,100,.75);
+}
+
+.loadingScreen:after{
+   display:inline-block;
+   height:100%;
+   content:"";
+   vertical-align:middle;
+}
+
+.loadingScreen img{
+    vertical-align:middle;
+    display:none;
+}
+
+.loadingScreen .loadingImgSelected{
+    vertical-align:middle;
+    display: inline-block;
+}
+
+.modalIconKasel {
+    height : 30px;
+    width : 30px;
+    margin-right : 10px;
+}
+
+.ui-autocomplete{
+    z-index : 9999
+}
+
+#modalGuildRegist .modal-body div label{
+    width : 120px;
+    text-align : right;
+}
+
+

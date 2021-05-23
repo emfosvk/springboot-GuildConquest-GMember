@@ -169,6 +169,15 @@ var COMN00_CODE = function(){
 
         tui.Grid.applyTheme('striped');
 
+        toastGrid.on('beforeRequest', (ev) => {
+            loadingBarControl(true);
+        });
+
+        toastGrid.on('response', (ev) => {
+            // 성공/실패와 관계 없이 응답을 받았을 경우
+            loadingBarControl(false);
+        });
+
         toastGrid.on('editingStart', (ev) => {
           // check the value
           var colName = ev.columnName;

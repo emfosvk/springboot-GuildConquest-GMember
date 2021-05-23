@@ -23,7 +23,7 @@ public class Book00ApiController {
     private final Book00Service book00Service;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @PostMapping("/book/api/searchCharItem.api")
+    @PostMapping("/book/openapi/searchCharItem.api")
     public Map<String, Object> searchCharItem(@RequestParam Map<String, Object> commandMap){
         String paramStr1 = String.valueOf(commandMap.get("paramStr1"));
 

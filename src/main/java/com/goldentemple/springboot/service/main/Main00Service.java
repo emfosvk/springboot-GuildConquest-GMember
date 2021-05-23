@@ -2,6 +2,7 @@ package com.goldentemple.springboot.service.main;
 
 import com.goldentemple.springboot.config.auth.dto.SessionUser;
 import com.goldentemple.springboot.domain.comn.Comn00Mapper;
+import com.goldentemple.springboot.domain.guld.Guld00Mapper;
 import com.goldentemple.springboot.domain.main.Main00Mapper;
 import com.goldentemple.springboot.domain.user.Role;
 import com.goldentemple.springboot.utils.CustmJavaUtils;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class Main00Service extends CustmJavaUtils {
 
     private final Main00Mapper main00Mapper;
+    private final Guld00Mapper guld00Mapper;
 
     @Transactional(readOnly = true)
     public List<Map> selectListMenuList(SessionUser ssuser) throws Exception {
@@ -29,7 +31,7 @@ public class Main00Service extends CustmJavaUtils {
         if(ssuser != null){
             userRole = ssuser.getRole();
         } else {
-            userRole = Role.fromString("GUEST");
+            userRole = Role.fromString("UNKNOWN");
         }
 
         String accessLevel = userRole.getAccessLevel();
@@ -48,7 +50,7 @@ public class Main00Service extends CustmJavaUtils {
         if(ssuser != null){
             userRole = ssuser.getRole();
         } else {
-            userRole = Role.fromString("GUEST");
+            userRole = Role.fromString("UNKNOWN");
         }
 
         String accessLevel = userRole.getAccessLevel();
@@ -65,6 +67,25 @@ public class Main00Service extends CustmJavaUtils {
         } else {
             return true;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Map checkGuildRegistSTS(SessionUser ssuser) throws Exception {
+
+        Long user_id ;
+
+        if(ssuser != null){
+            user_id = ssuser.getId();
+        } else {
+            return null;
+        }
+
+        Map<String, Object> commandMap = new HashMap<String, Object>();
+        commandMap.put("user_id", user_id);
+
+        Map<String, Object> resultMap = main00Mapper.checkGuildRegistSTS(commandMap);
+
+        return resultMap;
     }
 
 }

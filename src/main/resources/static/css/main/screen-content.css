@@ -27,4 +27,31 @@
     padding: 0px 5px 0px 5px;
 }
 
+* {
+box-sizing: border-box;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+}
+html {
+height: 100%;
+}
 
+body {
+margin: 0;
+height: 100%;
+}
+
+#sidebar-wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 80px; /* footer height */
+}
+
+footer {
+    position: absolute;
+    height : 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+}

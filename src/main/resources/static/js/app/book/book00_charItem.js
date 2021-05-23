@@ -9,7 +9,7 @@ var BOOK00_CHARITEM = function(){
 	var commParam = {};
 
 	//ajax url
-	var searchListBOOK00_CHARITEM_URL = "/book/api/searchCharItem.api";
+	var searchListBOOK00_CHARITEM_URL = "/book/openapi/searchCharItem.api";
 
 
 	/* ********************** [END] variables ****************** */
@@ -135,33 +135,40 @@ var BOOK00_CHARITEM = function(){
         var typeCode = selBoxTypeCode.getSelectedItem();
         searchOption.paramStr1 = typeCode.value;
 
-        $.ajax({
-            url: searchListBOOK00_CHARITEM_URL, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-            data: searchOption, // HTTP 요청과 함께 서버로 보낼 데이터
-            method: "POST", // HTTP 요청 메소드(GET, POST 등)
-            dataType: "json" // 서버에서 보내줄 데이터의 타입
-
-        }).done(function(jsonResult) {
-            console.log('성공');
-            console.log(jsonResult);
-            fn_BOOK00_CHARITEM_ajaxCallback('btnSearch', jsonResult, searchOption);
-
-        }).fail(function(xhr, status, errorThrown) {
-            console.log('에러');
-            console.log(xhr);
-            console.log(status);
-            console.log(errorThrown);
-
-        }).always(function(xhr, status) {
-            console.log('항상');
-            console.log(xhr);
-            console.log(status);
-
-            console.log('s3config');
-            console.log(commParam.variables.s3config);
-
-
+        cfn_ajax({
+                      type : "POST"
+                    , url : searchListBOOK00_CHARITEM_URL
+                    , data : searchOption
+                    , fromAjaxEvent : 'btnSearch'
+                    , callbackFunc : fn_BOOK00_CHARITEM_ajaxCallback
         });
+
+//        $.ajax({
+//            url: searchListBOOK00_CHARITEM_URL, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+//            data: searchOption, // HTTP 요청과 함께 서버로 보낼 데이터
+//            method: "POST", // HTTP 요청 메소드(GET, POST 등)
+//            dataType: "json" // 서버에서 보내줄 데이터의 타입
+//
+//        }).done(function(jsonResult) {
+//            console.log('성공');
+//            console.log(jsonResult);
+//            fn_BOOK00_CHARITEM_ajaxCallback('btnSearch', jsonResult, searchOption);
+//
+//        }).fail(function(xhr, status, errorThrown) {
+////            console.log('에러');
+////            console.log(xhr);
+////            console.log(status);
+//            console.log(errorThrown);
+//
+//        }).always(function(xhr, status) {
+////            console.log('항상');
+//            console.log(xhr);
+//            console.log(status);
+////            console.log('s3config');
+////            console.log(commParam.variables.s3config);
+//
+//
+//        });
 
 	}
 

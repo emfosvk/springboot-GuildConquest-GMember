@@ -1,0 +1,188 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper-top}}
+
+{{#userInfo}}
+    {{#userCertiYN}}
+
+        <div class="container">
+            <div class="row" id="screenHeader">
+                <div id="screenTitle" class="col-sm-6">
+                    <h1>홈페이지 길드 가입 관리</h1>
+                </div>
+                <div id="screenButton" class="col-sm-6">
+                    <a href="#" id="btnSearch" role="button" class="btn btn-primary">조회</a>
+                    <a href="#" id="btnClear"  role="button" class="btn btn-light">초기화</a>
+<!--                    <a href="#" id="btnSave"   role="button" class="btn btn-success">저장</a>-->
+                </div>
+            </div>
+            <div class="row" id="searchArea">
+                <form id="frmS" onsubmit="return false">
+                    <table id="tableSearch">
+                        <colgroup>
+                            <col width="100px">
+                            <col width="270px">
+                            <col width="150px">
+                            <col width="370px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>코드/이름</th>
+                                <!--
+                                <td><input type="text" name="paramStr1" id="frmS_paramStr1" data-type="text" class="" placeholder="코드명 / 이름" maxlength="10" style="width: 100%; height: 28px;"></td>
+                                -->
+                                <td><div id="frmS_paramStr1"></div></td>
+                                <th>가입 상태여부</th>
+                                <td>
+                                    <div>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_1" value="01" data-type="radio">
+                                        <label for="frmS_paramStr2_1">승인요청</label>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_2" value="10">
+                                        <label for="frmS_paramStr2_2">가입완료</label>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_3" value="N">
+                                        <label for="frmS_paramStr2_3">탈퇴/강퇴</label>
+                                        <input type="radio" name="paramStr2" id="frmS_paramStr2_4" value="A">
+                                        <label for="frmS_paramStr2_4">All</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </form>
+            </div>
+            <div class="row screenContent">
+                <div class="col-sm-12">
+                    <div id="toastGrid"></div>
+                </div>
+            </div>
+<!--            <div class="row EditGridDiv">-->
+<!--                <div class="col-sm-12">-->
+<!--                    <a href="#" id="btnNew"    role="button" class="btn btn-info">신규</a>-->
+<!--                    <a href="#" id="btnDelete" role="button" class="btn btn-danger">삭제</a>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    {{/userCertiYN}}
+    {{^userCertiYN}}
+        {{>layout/main/cert_no_permission}}
+    {{/userCertiYN}}
+{{/userInfo}}
+{{^userInfo}}
+    {{>layout/main/cert_no_login}}
+{{/userInfo}}
+
+{{>layout/main/wrapper-bottom}}
+
+<style>
+    .formTitle {
+        display: inline-block;
+        width: 130px;
+        text-align: right;
+    }
+    .formContent {
+        display: inline-block;
+        width: 260px;
+    }
+    .btnDisplayNone{
+        display: none;
+    }
+</style>
+
+<!-- [START] 길드 가입 관리 -->
+<div class="modal fade" id="modalGuildManageRegist" tabindex="-1" role="dialog" aria-labelledby="modalLabelGuildRegist" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="z-index:1041;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class='modalIconKasel ' src="/img/icons/kaselrun_normal.png">
+                <h5 class="modal-title" id="modalGuildManageRegist">길드 가입 신청</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmGM" onsubmit="return false;">
+                    <div class="ui-widget">
+                        <div class="formTitle">
+                            <label for="frmGM_guild"><span style="color: red; font-weight: 900;">*</span> <a href="#" class="GRtooltip" title="가입 길드">Guild</a></label>
+                        </div>
+                        <div class="formContent">
+                            <input id="frmGM_guild" data-type="text" name="guild_name" readonly="readonly">
+                            <input id="frmGM_guild_code" name="guild_id" type="hidden" data-type="hidden" readonly="readonly" disabled="disabled">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="formTitle">
+                            <label for="frmGM_nickName"><span style="color: red; font-weight: 900;">*</span> <a href="#" class="GRtooltip" title="인게임 닉네임">Nick Name</a></label>
+                        </div>
+                        <div class="formContent">
+                            <input id="frmGM_nickName" name="nickname" type="text" data-type="text" maxlength="20" style="width:260px;">
+                            <input id="frmGM_userId" name="user_id" type="hidden" data-type="hidden" readonly="readonly" disabled="disabled">
+                        </div>
+                    <div>
+                        <div class="formTitle">
+                            <a href="#" class="GRtooltip" title="가입 상태">Status</a>
+                        </div>
+                        <div class="formContent">
+                            <div id="frmGM_registStatus"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="formTitle">
+                            <a href="#" class="GRtooltip" title="길드권한">Role</a>
+                        </div>
+                        <div class="formContent">
+                            <div id="frmGM_role"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="formTitle">
+                            <label for="frmGM_registMsg"><a href="#" class="GRtooltip" title="길드 가입 메시지">Regist Message</a></label>
+                        </div>
+                        <div class="formContent">
+                            <textarea id="frmGM_registMsg" name="regist_msg" data-type="text" rows="5" maxlength="200" readonly style="width:260px; vertical-align: top; "></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id='btnGuildManageRegistClose' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id='btnGuildManageRegistModify' type="button" class="btn btn-primary">길드정보 수정</button>
+                <button id='btnGuildManageRegistReject' type="button" class="btn btn-danger">길드가입 거절</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [E N D] 길드 가입 정보 Modal -->
+
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/app/guld/guld00_regist.js"></script>
+<script>
+	$(document).ready(function(){
+		// send parameter to scirpt for java parameter
+
+        var guildList = {{{guildList}}};
+        var registStatusList = {{{registStatusList}}};
+        var roleList = {{{roleList}}};
+        var loginUserInfo = {{{guildInfo}}};
+		var param = {
+			// default parameter
+			role     : 'IR01_0100_V01',
+			// session parameter
+			variables : {
+   			         "guildList"        : guildList
+   			        ,"registStatusList" : registStatusList
+   			        ,"roleList"         : roleList
+   			        ,"loginUserInfo"    : loginUserInfo
+				}
+			};
+
+		GULD00_REGIST.initialize(param);
+	});
+</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
+

@@ -19,6 +19,14 @@ public class CustmJavaUtils {
         return true;
     }
 
+    protected boolean checkIsNotNullMap(Map param) throws Exception
+    {
+        if(param == null){
+            return false;
+        }
+        return true;
+    }
+
     protected boolean checkIsNotNullList(List param) throws Exception
     {
         if(param == null || param.size() == 0){
@@ -60,7 +68,7 @@ public class CustmJavaUtils {
     }
 
     //map 처리
-    protected JSONObject  convertMapToJson(Map<String, Object> map) {
+    public JSONObject  convertMapToJson(Map<String, Object> map) {
 
         JSONObject json = new JSONObject();
         for (Map.Entry<String, Object> entry : map.entrySet()) {

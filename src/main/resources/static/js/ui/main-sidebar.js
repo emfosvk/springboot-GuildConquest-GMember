@@ -14,7 +14,10 @@ var main_sidebar = function(){
 	var commParam = {};
 
 	//ajax url
-	var searchmain_sidebarURL 				= "/biz/ir01_0111/searchRoomRateOnRsvn.do";
+	var searchmain_sidebarURL 			= "/biz/ir01_0111/searchRoomRateOnRsvn.do";
+	var searchListGuild				    = "/guld/openapi/searchGuild.api";
+	var registerGuild 				    = "/guld/openapi/registerGuild.api";
+	var cancelRegisterGuild 		    = "/guld/openapi/cancelRegisterGuild.api";
 
 	/* ********************** [END] variables ****************** */
 
@@ -44,6 +47,9 @@ var main_sidebar = function(){
 		//init Grid
 		fn_main_sidebar_initgrid();
 
+		//init Grid
+       fn_main_sidebar_initGuildModal();
+
 		//default value setting
 		fn_main_sidebar_defaultValue();
 
@@ -59,7 +65,6 @@ var main_sidebar = function(){
 	var fn_main_sidebar_initgrid = function(){
 
 	}
-
 
 	/* ********************** [END] init grid ****************** */
 
@@ -123,6 +128,204 @@ var main_sidebar = function(){
 
 	}
 
+	/**
+	 * @author Rosa, 2021-05-14
+	 * @method fn_main_sidebar_initGuildModal
+	 * @process create Grid
+	 */
+	var fn_main_sidebar_initGuildModal = function(){
+	    if(commParam.variables.mainGuildInfoExeBoolean){
+            $('#btnGuildInfo').on('click', (e) => {
+                if(commParam.variables.mainGuildInfo){
+                    //cancelRegisterGuild
+                    var registInfo = commParam.variables.mainGuildInfo
+                    var cancelModalTitle = '';
+                    var cancelModalMsg = '';
+                    var cancelBtnMsg = '길드 탈퇴';
+
+                    switch(registInfo.regist_status){
+                        case '01' : // 가입 승인 대기
+                            cancelModalTitle = '가입 승인 대기 중';
+
+                            cancelModalMsg = '길드명 : ' + registInfo.guild_name + '<br>'
+                                            + '신청자 게임 닉네임 : ' + registInfo.nickname + '<br>'
+                                            + '신청 메시지 : ' +  registInfo.regist_msg + '<br>';
+                            cancelBtnMsg = '가입 신청 취소';
+                            break;
+                        case '10' : // 현 길드원
+                            cancelModalTitle = '길드 가입 정보';
+
+                            cancelModalMsg = '길드명 : ' + registInfo.guild_name + '<br>'
+                                            + '신청자 게임 닉네임 : ' + registInfo.nickname + '<br>'
+                                            + '직책 : ' + registInfo.role_name + '<br>';
+                            cancelBtnMsg = '길드 탈퇴';
+                            break;
+                    }
+
+                    $('#modalGuildInfo .modal-title').html(cancelModalTitle);
+                    $('#modalGuildInfo .modal-body').html(cancelModalMsg);
+                    $('#btnGuildCancelRegist').html(cancelBtnMsg);
+
+                    $('#btnGuildCancelRegist').on('click', (e)=>{
+                        var registInfo = commParam.variables.mainGuildInfo;
+                        if(registInfo){
+
+                            var confirmTitle = '';
+
+                            var confirmMsg = '';
+                            var cancelSuccessMsg = '';
+
+                            switch(registInfo.regist_status){
+                                case '01' : // 가입 승인 대기
+                                    confirmTitle = '가입 신청 취소';
+
+                                    confirmMsg = '길드명 : ' + registInfo.guild_name + '<br>'
+                                                    + '게임 닉네임 : ' + registInfo.nickname + '<br>'
+                                                    + '신청 메시지 : ' +  registInfo.regist_msg + '<br>'
+                                                    + '<br>'
+                                                    + '<h5>'+ '정말로 가입신청을 취소 하시겠습니까?' +'</h5>';
+                                    cancelSuccessMsg = '길드 가입 신청 취소가 완료되었습니다.';
+                                    break;
+                                case '10' : // 현 길드원
+                                    confirmTitle = '길드 탈퇴';
+
+                                    confirmMsg = '길드명 : ' + registInfo.guild_name + '<br>'
+                                                    + '등록 닉네임 : ' + registInfo.nickname + '<br>'
+                                                    + '직책 : ' + registInfo.role_name + '<br>'
+                                                    + '<br>'
+                                                    + '<h5>'+ '정말로 길드를 탈퇴 하시겠습니까?' +'</h5>';
+                                    cancelSuccessMsg = '길드 탈퇴가 완료되었습니다.';
+                                    cancelSuccessMsg += "<br>다시 로그인 해주세요."
+                                    break;
+                            }
+
+                            var GRcallbackFunc = function (fromAjaxEvent, jsonResult, registInfo){
+                                if(jsonResult.result == true){
+                                    cfn_openCommonModal({
+                                         title: confirmTitle + ' 성공'
+                                        ,content : cancelSuccessMsg
+                                        ,Close : GRcallbackReloadPage
+                                    });
+                                } else {
+                                   var errorContent = (jsonResult && jsonResult.msg)? jsonResult.msg : '관리자에게 문의하세요';
+                                    cfn_openCommonModal({
+                                         modalMode : 'alert'
+                                        ,title: confirmTitle + ' 실패'
+                                        ,content : errorContent
+                                        ,Close : GRcallbackReloadPage
+                                    });
+                                }
+                            }
+
+                            var GRcallbackReloadPage = function (){
+                                location.reload();
+                            }
+
+                            cfn_openCommonModal({
+                                                 modalMode : 'confirm_alert'
+                                                ,title: confirmTitle
+                                                ,content : confirmMsg
+                                                ,OK : ()=>{
+                                                    cfn_ajax({
+                                                          type : "POST"
+                                                        , url : cancelRegisterGuild
+                                                        , data : registInfo
+                                                        , fromAjaxEvent : 'btnSearch'
+                                                        , callbackFunc : GRcallbackFunc
+                                                    });
+                                                }
+                            });
+
+                        }
+                    })
+
+                    // 길드 정보 팝업
+                    $('#modalGuildInfo').modal("show");
+
+                } else {
+
+                    // 길드 가입 팝업 modalGuildRegist
+                    $('#frmG_guild').gtAjaxAutoComplete({
+                          type : "GET"
+                        , url : searchListGuild
+                        , data : {paramStr2 : 'Y'}
+                        , codeCol : "guild_id"
+                        , nameCol : "guild_name"
+                        , minLength : 0
+                    });
+
+                    $('#modalGuildRegist label .GRtooltip').tooltip();
+
+                    $('#btnGuildRegist').on('click', (e)=>{
+                        var registInfo = $('#frmG').formSerialize(true);
+                        if(registInfo){
+                            if(!registInfo.guild_id || registInfo.guild_id == ''){
+                                alert('가입하려는 길드를 선택해주세요');
+                                $('#frmG_guild').focus();
+                                return false;
+                            }
+                            if(!registInfo.nickname || registInfo.nickname == ''){
+                                alert('인게임 닉네임을 등록해주세요');
+                                $('#frmG_guild').focus();
+                                return false;
+                            }
+
+                            var confirmMsg = '길드명 : ' + registInfo.guild_name + '<br>'
+                                            + '신청자 게임 닉네임 : ' + registInfo.nickname + '<br>'
+                                            + '신청 메시지 : ' +  registInfo.regist_msg + '<br>'
+                                            + '<br>'
+                                            + '<h5>'+ '위 정보로 길드 신청을 하시겠습니까?' +'</h5>'
+
+                            var GRcallbackFunc = function (fromAjaxEvent, jsonResult, registInfo){
+                                if(jsonResult.result == true){
+                                    cfn_openCommonModal({
+                                         title:'길드 가입 신청 완료'
+                                        ,content : '신청이 완료되었습니다.'
+                                        ,Close : GRcallbackReloadPage
+                                    });
+                                } else {
+                                   var errorTitle = '길드 가입 신청 실패';
+                                   var errorContent = (jsonResult && jsonResult.msg)? jsonResult.msg : '관리자에게 문의하세요';
+                                    cfn_openCommonModal({
+                                         modalMode : 'alert'
+                                        ,title: errorTitle
+                                        ,content : errorContent
+                                        ,Close : GRcallbackReloadPage
+                                    });
+                                }
+                            }
+
+                            var GRcallbackReloadPage = function (){
+                                location.reload();
+                            }
+
+                            cfn_openCommonModal({
+                                                 modalMode : 'confirm'
+                                                ,title:'길드 가입 신청 정보 확인'
+                                                ,content : confirmMsg
+                                                ,OK : ()=>{
+                                                    cfn_ajax({
+                                                          type : "POST"
+                                                        , url : registerGuild
+                                                        , data : registInfo
+                                                        , fromAjaxEvent : 'btnSearch'
+                                                        , callbackFunc : GRcallbackFunc
+                                                    });
+                                                }
+                            });
+
+                        }
+                    })
+
+                    $('#modalGuildRegist').modal("show");
+
+                }
+            });
+	    }
+	    //modalGuildRegist
+        //modalGuildInfo
+	}
+
 	/* ********************** [END] user defined function ****************** */
 
 	return {
@@ -138,5 +341,3 @@ var main_sidebar = function(){
 		commParam : commParam
 	};
 }();
-
-main_sidebar.initialize();

@@ -43,6 +43,9 @@
                             {{#userInfo}}
                                 <img src="{{userInfo.picture}}" width="40px" height="40px" style="border-radius: 20px; margin-right: 10px; border: 2px solid gold;" alt="userIMG"/>
                                 Logged in as <span id="user" style="padding-right: 15px"> {{userInfo.name}} </span>
+                                <button id="btnGuildInfo" type="button" class="btn btn-primary">
+                                    길드정보
+                                </button>
                                 <a href="/logout" class="btn btn-info active" role="button">Logout</a>
                             {{/userInfo}}
                             {{^userInfo}}
@@ -80,6 +83,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://cafe.naver.com/kingsraid" target="_sub">Officical Cafe</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://game-stats.kingsraid.com/live/kr-stats/v1/html/index.html?lang=ko" target="_sub">Statistics</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Menu List
@@ -108,5 +114,153 @@
                 </ul>
             </div>
         </nav>
+        <div id="loadingScreen" class="loadingScreen">
+            <img id='loadingKasel_normal' class='loadingKasel loadingImgSelected' src="/img/icons/kaselrun_normal.png">
+            <img id='loadingKasel_eclipse' class='loadingKasel ' src="/img/icons/kaselrun_eclipse.png">
+        </div>
 
+        <div class="modal fade" id="modalCommon" tabindex="-1" role="dialog" aria-labelledby="modalLabelCommon" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img class='modalIconKasel' src="/img/icons/kaselrun_normal.png">
+                        <h5 class="modal-title" id="modalLabelCommon"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary common-modal-close" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="modalLabelConfirm" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img class='modalIconKasel' src="/img/icons/kaselrun_normal.png">
+                        <h5 class="modal-title" id="modalLabelConfirm"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary common-modal-close" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary common-modal-ok">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCommonAlert" tabindex="-1" role="dialog" aria-labelledby="modalLabelCommon" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img class='modalIconKasel' src="/img/icons/kaselrun_eclipse.png">
+                        <h5 class="modal-title" id="modalLabelCommon"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary common-modal-close" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCommonAlertConfirm" tabindex="-1" role="dialog" aria-labelledby="modalLabelCommon" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img class='modalIconKasel' src="/img/icons/kaselrun_eclipse.png">
+                        <h5 class="modal-title" id="modalLabelCommon"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary common-modal-close" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger common-modal-ok">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#userInfo}}
+            <!-- [START] 길드 가입 Modal -->
+            <div class="modal fade" id="modalGuildRegist" tabindex="-1" role="dialog" aria-labelledby="modalLabelGuildRegist" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="z-index:1041;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <img class='modalIconKasel ' src="/img/icons/kaselrun_normal.png">
+                            <h5 class="modal-title" id="modalLabelGuildRegist">길드 가입 신청</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="frmG" onsubmit="return false;">
+                                <div class="ui-widget">
+                                    <label for="frmG_guild"><span style="color: red; font-weight: 900;">*</span> <a href="#" class="GRtooltip" title="가입 길드">Guild</a></label>
+                                    <input id="frmG_guild" data-type="text" name="guild_name">
+                                    <input id="frmG_guild_code" name="guild_id" type="text" data-type="text" readonly="readonly" disabled="disabled" style="width:50px;">
+                                </div>
+                                <div>
+                                    <label for="frmG_nickName"><span style="color: red; font-weight: 900;">*</span> <a href="#" class="GRtooltip" title="인게임 닉네임">Nick Name</a></label>
+                                    <input id="frmG_nickName" name="nickname" type="text" data-type="text" maxlength="20" style="width:260px;">
+                                </div>
+                                <div>
+                                    <label for="frmG_registMsg"><a href="#" class="GRtooltip" title="길드 가입 메시지">Regist Message</a></label>
+                                    <textarea id="frmG_registMsg" name="regist_msg" data-type="text" rows="5" maxlength="200" readonly="readonly" style="width:260px; vertical-align: top; "></textarea>
+                                </div>
+                            </form>
+                            <div style="padding-top:20px;"><h6>검색되지 않는 길드는 카셀런 관리자에게 문의주세요.</h6></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id='btnGuildRegistClose' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id='btnGuildRegist' type="button" class="btn btn-primary">길드가입 신청</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [E N D] 길드 가입 Modal -->
+
+            <!-- [START] 길드 정보 Modal -->
+            <div class="modal fade" id="modalGuildInfo" tabindex="-1" role="dialog" aria-labelledby="modalLabelGuildInfo" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="z-index:1041;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <img class='modalIconKasel ' src="/img/icons/kaselrun_normal.png">
+                            <h5 class="modal-title" id="modalLabelGuildInfo">길드 정보</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id='btnGuildCancelRegist' type="button" class="btn btn-danger">길드 탈퇴</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [E N D] 길드 정보 Modal -->
+
+        {{/userInfo}}
         <div class="container-fluid">

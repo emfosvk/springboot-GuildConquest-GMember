@@ -20,6 +20,7 @@ public class ToastGridParamDto {
     private String paramStr3;
     private String paramStr4;
     private String paramStr5;
+    private String autoCompleteOption;
 
     private Integer paramInt1;
     private Integer paramInt2;

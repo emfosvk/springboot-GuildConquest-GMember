@@ -78,6 +78,38 @@
            AND attr_02 IS NOT NULL
          LIMIT 1
     </select>
+
+    <select id="checkGuildRegistSTS" parameterType="map" resultType="java.util.HashMap">
+        select
+              a.guild_id
+            , b.guild_name
+            , a.nickname
+            , a.regist_msg
+            , a.user_id
+            , u.role
+            , c.comn_code_name as role_name
+            , a.regist_status
+            , d.comn_code_name as regist_status_name
+            , d.comn_code_comt as regist_status_comt
+            , c.attr_01 as user_level
+          from tb_guld_regist a
+
+          join tb_guld_guild b
+            on a.guild_id = b.guild_id
+
+         right outer join user u
+            on a.user_id = u.id
+
+          join tb_comn_code c
+            on c.comn_code = u.role
+
+          join tb_comn_code d
+            on d.comn_code = a.regist_status
+
+         where u.id = #{user_id}
+           and a.regist_status not in ('91', '99')
+           and d.type_code = 'REGIST_STS'
+    </select>
     <!-- [E N D - MAIN] Init Menu List -->
 
 

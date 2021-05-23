@@ -14,7 +14,7 @@
                 guild_name as label,
                 guild_name as text
             from tb_guld_guild
-            where guild_id in ( select guild_id from tb_guld_member where user_id = #{paramLong1})
+            where guild_id in ( select guild_id from tb_guld_regist where user_id = #{paramLong1} and regist_status = '10')
               and use_yn = 'Y'
             union all
             select
@@ -25,6 +25,26 @@
             where '9' = #{paramStr1}
               and use_yn = 'Y'
              ) a
+    </select>
+
+    <select id="selectListGuildRoleForDropDown" parameterType="map" resultType="java.util.HashMap">
+        select
+              a.comn_code as value
+            , a.comn_code_name as label
+            , a.comn_code_name as text
+            , case when a.attr_01 <![CDATA[ <= ]]> b.user_level then 'Y'
+              else 'N' end change_yn
+          from tb_comn_code a
+         right outer join (
+                            select b2.attr_01 as user_level
+                              from user b1
+                              join tb_comn_code b2
+                                on b1.role = b2.comn_code
+                               and b2.type_code = 'SYS_GRADE'
+                               and b1.id = #{paramLong1}
+                           ) b
+            on a.type_code = 'SYS_GRADE'
+         order by a.sort_order desc
     </select>
 
     <!-- [START - GULD00_GUILD] Guild Setting -->
@@ -48,6 +68,12 @@
                         <where>
                             <if test="paramStr1 != null and paramStr1 !=''">
                                 guild_name like CONCAT(#{paramStr1}, '%')
+                            </if>
+                            <if test="autoCompleteOption != null and autoCompleteOption !=''">
+                                (guild_name like CONCAT(#{autoCompleteOption}, '%') or guild_name = #{autoCompleteOption})
+                            </if>
+                            <if test='paramStr2 != null and paramStr2 !=""and paramStr2 !="A"'>
+                                and use_yn like #{paramStr2}
                             </if>
                         </where>
                         ) a
@@ -97,6 +123,159 @@
     </delete>
 
     <!-- [E N D - GULD00_GUILD] Guild Setting -->
+
+    <!-- [START - GULD00_REGIST] Guild Regist -->
+
+    <select id="selectListGuildRegist" parameterType="com.goldentemple.springboot.web.dto.ToastGridParamDto" resultType="java.util.HashMap">
+        select
+            aaa.*
+          from (
+                select
+                      ROW_NUMBER() over() as rownum
+                    , FOUND_ROWS() totalcount
+                    , guild_name
+                    , guild_id
+                    , nickname
+                    , role
+                    , regist_status
+                    , regist_msg
+                    , role_name
+                    , regist_status_name
+                    , user_id
+                    , user_level
+                    , last_sts_upd_dt
+                  from (
+                        select
+                              b.guild_name
+                            , a.guild_id
+                            , a.nickname
+                            , u.role
+                            , a.regist_status
+                            , a.regist_msg
+                            , c.comn_code_name as role_name
+                            , d.comn_code_name as regist_status_name
+                            , a.user_id
+                            , c.attr_01 as user_level
+                            , c.sort_order AS grade_sort_order
+                            , d.sort_order AS rgsts_sort_order
+                            , DATE_FORMAT(a.last_sts_upd_dt, '%Y-%m-%d %H:%i:%s' ) AS last_sts_upd_dt
+                          from tb_guld_regist a
+                          join tb_guld_guild b
+                            on a.guild_id = b.guild_id
+                         right outer join user u
+                            on a.user_id = u.id
+                          join tb_comn_code c
+                            on c.comn_code = u.role
+                           and c.type_code = 'SYS_GRADE'
+                          join tb_comn_code d
+                            on d.comn_code = a.regist_status
+                           and d.type_code = 'REGIST_STS'
+                         where a.guild_id = #{paramStr1}
+                        <if test='paramStr2 != null and paramStr2 !="" and paramStr2 !="A" and paramStr2 !="N"'>
+                            and regist_status = #{paramStr2}
+                            and regist_status not in ('91', '99')
+                        </if>
+                        <if test='paramStr2 != null and paramStr2 !="" and paramStr2 !="A" and paramStr2 == "N"'>
+                            and regist_status in ('91', '99')
+                        </if>
+                         ORDER BY d.sort_order, c.sort_order, a.last_sts_upd_dt
+                    ) a
+
+              ) aaa
+
+        <if test="startRowNum != null and startRowNum !=''">
+            <if test="perPage != null and perPage !=''">
+                LIMIT  #{startRowNum}, #{perPage}
+            </if>
+        </if>
+
+    </select>
+
+    <select id="selectGuildRegist" parameterType="map" resultType="java.util.HashMap">
+        select
+            a.guild_id,
+            b.guild_name,
+            a.user_id,
+            a.nickname,
+            a.regist_msg,
+            a.regist_status,
+            c.comn_code_name as regist_status_name,
+            c.comn_code_comt as regist_status_comt
+
+         from tb_guld_regist a
+
+         join tb_guld_guild b
+           on a.guild_id = b.guild_id
+
+         join (select comn_code, comn_code_name, comn_code_comt from tb_comn_code where type_code = 'REGIST_STS') c
+           on a.regist_status = c.comn_code
+
+        where a.guild_id = #{guild_id}
+          and a.user_id = #{id}
+    </select>
+
+    <insert id="insertGuildRegist">
+        insert into tb_guld_regist
+        (
+            guild_id,
+            user_id,
+            nickname,
+            regist_msg,
+            regist_status,
+            first_reg_dt,
+            first_reg_user_id,
+            last_upd_dt,
+            last_upd_user_id
+        )
+        values
+        (
+             #{guild_id}
+            ,#{user_id}
+            ,#{nickname}
+            ,#{regist_msg}
+            ,#{regist_status}
+            ,sysdate()
+            ,#{id}
+            ,sysdate()
+            ,#{id}
+        )
+    </insert>
+    <update id="updateGuildRegistRenew">
+        update tb_guld_regist
+           set regist_status = #{regist_status}
+              ,regist_msg = #{regist_msg}
+              ,first_reg_dt = sysdate()
+              ,first_reg_user_id = #{id}
+              ,last_upd_dt = sysdate()
+              ,last_upd_user_id = #{id}
+         where guild_id = #{guild_id}
+           and user_id = #{user_id}
+    </update>
+    <update id="updateGuildRegist">
+        update tb_guld_regist
+           set regist_status = #{regist_status}
+              ,regist_msg = #{regist_msg}
+              ,nickname   = #{nickname}
+              ,last_upd_dt = sysdate()
+              ,last_upd_user_id = #{id}
+         where guild_id = #{guild_id}
+           and user_id = #{user_id}
+    </update>
+
+    <update id="updateUserRole">
+        update user
+           set role = #{role}
+              ,modified_date = sysdate()
+        where id = #{user_id}
+    </update>
+
+    <delete id="deleteGuildRegist">
+        delete from tb_guld_regist
+         where guild_id = #{guild_id}
+           and user_id = #{user_id}
+    </delete>
+
+    <!-- [E N D - GULD00_REGIST] Guild Regist -->
 
     <!-- [START - GULD00_MEMBER] Guild Member Setting -->
 

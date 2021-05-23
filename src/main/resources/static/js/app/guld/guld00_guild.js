@@ -9,7 +9,7 @@ var GULD00_GUILD = function(){
 	var commParam = {};
 
 	//ajax url
-	var searchListGULD00_GUILD_URL = "/guld/api/searchGuild.api";
+	var searchListGULD00_GUILD_URL = "/guld/openapi/searchGuild.api";
 	var modifyGULD00_GUILD_URL 	   = "/guld/api/modifyGuild.api";
 
 
@@ -114,6 +114,25 @@ var GULD00_GUILD = function(){
 
         tui.Grid.applyTheme('striped');
 
+        toastGrid.on('beforeRequest', (ev) => {
+            loadingBarControl(true);
+
+        });
+
+        toastGrid.on('response', (ev) => {
+            // 성공/실패와 관계 없이 응답을 받았을 경우
+            loadingBarControl(false);
+        });
+
+        toastGrid.on('beforeRequest', (ev) => {
+            $('#loadingScreen').css('display', 'block');
+        });
+
+        toastGrid.on('response', (ev) => {
+            // 성공/실패와 관계 없이 응답을 받았을 경우
+            setTimeout(()=>  $('#loadingScreen').css('display', ''), 1000);
+        });
+
         toastGrid.on('editingStart', (ev) => {
           // check the value
 //          var colName = ev.columnName;
@@ -206,7 +225,6 @@ var GULD00_GUILD = function(){
     var fn_GULD00_GUILD_btnEvent_clear = function(e){
         console.log('초기화버튼');
         toastGrid.destroy();
-        selBoxTypeCode.destroy();
         fn_GULD00_GUILD_ready();
         fn_GULD00_GUILD_init();
 

@@ -12,5 +12,6 @@ public interface Main00Mapper {
     // comn code
     public List<Map> selectListMenuList(Map commandMap);
     public Map checkUriAuth(Map commandMap);
+    public Map checkGuildRegistSTS(Map commandMap);
 
 }

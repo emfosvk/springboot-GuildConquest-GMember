@@ -32,6 +32,7 @@ dependencies {
 
     //Springboot 기본
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 
@@ -58,5 +59,8 @@ dependencies {
     compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2')
 
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
+
+    //SQL 로그 등록록
+   implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
 }

@@ -1,8 +1,9 @@
 
-
+<script src="/js/utils/gtCommonTags.js"></script>
+<script src="/js/utils/gtCommonUtil.js"></script>
 <script src="/js/ui/main-menu.js"></script>
-
 <script>
+    // 프로그램 메뉴 관련
 	$(document).ready(function(){
 		// send parameter to scirpt for java parameter
         var mainMenuList = {{{mainMenuList}}};
@@ -18,9 +19,39 @@
 	});
 </script>
 
-
 <script src="/js/ui/main-sidebar.js"></script>
-<script src="/js/utils/gtCommonUtil.js"></script>
+<script>
+    // 길드정보 관련
+    $(document).ready(function(){
+		// send parameter to scirpt for java parameter
+        {{#guildInfo}}
+        var mainGuildInfo = {{{guildInfo}}};
+        {{/guildInfo}}
+        {{^guildInfo}}
+        var mainGuildInfo = null;
+        {{/guildInfo}}
+        {{#userInfo}}
+        var mainGuildInfoExeBoolean = true;
+        {{/userInfo}}
+        {{^userInfo}}
+        var mainGuildInfoExeBoolean = false;
+        {{/userInfo}}
+        console.log(mainGuildInfo);
+
+		var mainSidebarParam = {
+			// session parameter
+			variables : {
+   			        "mainGuildInfo" : mainGuildInfo,
+   			        "mainGuildInfoExeBoolean" : mainGuildInfoExeBoolean
+				}
+			};
+
+		main_sidebar.initialize(mainSidebarParam);
+	});
+</script>
+
+
+
 
 
 </html>

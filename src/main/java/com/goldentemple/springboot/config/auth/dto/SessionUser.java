@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public class SessionUser implements Serializable {
@@ -18,7 +19,7 @@ public class SessionUser implements Serializable {
     private String picture;
     private Role role;
 
-    public SessionUser(HashMap<String,Object> user){
+    public SessionUser(Map<String,Object> user){
         this.id = Long.valueOf(String.valueOf(user.get("id")));
         this.kakao_id = Long.valueOf(String.valueOf(user.get("kakao_id")));
         this.name = String.valueOf(user.get("name"));
@@ -41,4 +42,7 @@ public class SessionUser implements Serializable {
         return returnMap;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

@@ -52,7 +52,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         logger.debug(">>>>>>> [BEFORE] >> loadUser > saveOrUpdate");
 
         User uuser;// = saveOrUpdate(attributes);
-        HashMap user = saveOrUpdate(attributes, registrationId);
+        Map user = saveOrUpdate(attributes, registrationId);
         logger.debug(">>>>>>> [AFTER ] >> loadUser > saveOrUpdate");
         SessionUser ssUser = new SessionUser(user);
         httpSession.setAttribute("user", ssUser);
@@ -66,18 +66,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private HashMap saveOrUpdate(OAuthAttributes attributes, String registrationId){
+    private Map saveOrUpdate(OAuthAttributes attributes, String registrationId){
 //        User user = userRepository.findByEmail(attributes.getEmail())
 //                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
 //                .orElse(attributes.toEntity());
-        HashMap<String, Object> searchMap = new HashMap();
+        Map searchMap = new HashMap();
 
         searchMap.put("kakao_id", attributes.getKakao_id());
         searchMap.put("email", attributes.getEmail());
 
         logger.debug(">>>>>>> [BEFORE] >> saveOrUpdate > selectUserByEmail");
 
-        HashMap userinfo;
+        Map userinfo;
 
         //if("kakao".equals(registrationId)){
             userinfo = user00Mapper.selectUserByKakaoId(searchMap);
@@ -92,10 +92,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         if("I".equals(mergeMode)){
             userinfo = new HashMap();
 
+            userinfo.put("role", "GUEST");
 
-//            userinfo.put("role", "GUEST");
-            // 임시허용
-            userinfo.put("role", "MEMBER");
         }
 
         LocalDateTime nowTime = LocalDateTime.now();
@@ -122,10 +120,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         logger.debug(">>>>>>> [AFTER ] >> saveOrUpdate > insertUser or updateUser");
         logger.debug(">>>>>>> [BEFORE] >> saveOrUpdate > selectUser");
 
-        HashMap newUserinfo;
+        Map newUserinfo;
 
         //if("kakao".equals(registrationId)){
             newUserinfo = user00Mapper.selectUserByKakaoId(searchMap);
+
         //} else {
         //    newUserinfo = user00Mapper.selectUserByEmail(searchMap);
         //}

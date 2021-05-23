@@ -5,15 +5,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface User00Mapper {
-    public List<HashMap> selectListUser(HashMap searchMap);
-    public HashMap selectUser(HashMap searchMap);
-    public HashMap selectUserByEmail(HashMap searchMap);
-    public HashMap selectUserByKakaoId(HashMap searchMap);
-    public void insertUser(HashMap searchMap);
-    public void updateUserByEmail(HashMap searchMap);
-    public void updateUserByKakaoId(HashMap searchMap);
+    public List<Map> selectListUser(Map searchMap);
+    public Map selectUser(Map searchMap);
+    public Map selectUserByEmail(Map searchMap);
+    public Map selectUserByKakaoId(Map searchMap);
+    public void insertUser(Map searchMap);
+    public void updateUserByEmail(Map searchMap);
+    public void updateUserByKakaoId(Map searchMap);
 
 }
