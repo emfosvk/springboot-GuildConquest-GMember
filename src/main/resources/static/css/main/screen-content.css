@@ -27,6 +27,7 @@
     padding: 0px 5px 0px 5px;
 }
 
+/*
 * {
 box-sizing: border-box;
 -webkit-box-sizing: border-box;
@@ -44,7 +45,7 @@ height: 100%;
 #sidebar-wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 80px; /* footer height */
+    padding-bottom: 80px;
 }
 
 footer {
@@ -55,3 +56,4 @@ footer {
     right: 0;
     color: white;
 }
+*/
