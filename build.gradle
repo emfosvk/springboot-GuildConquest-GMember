@@ -34,7 +34,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.springframework.security:spring-security-test')
+    //testCompile('org.springframework.security:spring-security-test')
 
     //Spring mustache
     compile('org.springframework.boot:spring-boot-starter-mustache')
