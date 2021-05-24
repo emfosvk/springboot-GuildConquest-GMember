@@ -11,8 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class PostsRepositoryTest {
 
 //    @Autowired
@@ -23,7 +22,6 @@ public class PostsRepositoryTest {
     //    postsRepository.deleteAll();
     //}
 
-    @Test
     public void callPosts(){
 //        String title = "테스트 게시글 제목";
 //        String content = "테스트 본문";
@@ -42,7 +40,6 @@ public class PostsRepositoryTest {
 
     }
 
-    @Test
     public void insertBaseTimeEntity (){
         // given
 //        LocalDateTime now = LocalDateTime.of(2021,4,6,16,0,0);

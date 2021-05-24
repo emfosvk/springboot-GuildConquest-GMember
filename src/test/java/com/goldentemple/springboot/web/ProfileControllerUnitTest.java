@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProfileControllerUnitTest {
 
-    @Test
     public void load_aws_profile(){
 //        //given
 //        String expectedProfile = "aws";
@@ -25,7 +24,6 @@ public class ProfileControllerUnitTest {
 //        assertThat(profile).isEqualTo(expectedProfile);
     }
 
-    @Test
     public void load_first_profile_when_no_aws_profile(){
 //        //given
 //        String expectedProfile = "oauth";
@@ -43,7 +41,6 @@ public class ProfileControllerUnitTest {
 //        assertThat(profile).isEqualTo(expectedProfile);
     }
 
-    @Test
     public void load_default_profile_when_no_active_profile(){
 //        //given
 //        String expectedProfile = "default";

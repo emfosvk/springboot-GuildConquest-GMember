@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HelloResponceDtoTest {
 
-    @Test
     public void lombokActiveTest(){
 //        String name = "test";
 //        int amt = 1000;
