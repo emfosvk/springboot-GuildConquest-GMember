@@ -85,4 +85,28 @@
          FROM tb_comn_item
         WHERE item_type LIKE #{paramStr1}
     </select>
+
+    <!-- [START - BOOK00_EVMATCH ] Event Match Char lottety -->
+
+    <select id="searchListEvChar" resultType="java.util.HashMap">
+        SELECT
+              a.char_id
+            , a.char_name
+            , b.comn_code_name as class_name
+            , nvl(a.ev_use_yn, 'Y') AS ev_use_yn
+          FROM tb_comn_char a
+          join tb_comn_code b
+            on a.class = b.comn_code
+           and b.type_code = 'CLASS'
+
+    </select>
+
+    <update id="updateEvChar">
+        update tb_comn_char
+           set ev_use_yn = #{ev_use_yn}
+         where char_id = #{char_id}
+    </update>
+
+    <!-- [E N D - BOOK00_EVMATCH ] Event Match Char lottety -->
+
 </mapper>

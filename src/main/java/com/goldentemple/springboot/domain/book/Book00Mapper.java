@@ -12,5 +12,8 @@ public interface Book00Mapper {
     // comn code
     public List<Map> selectListBookCharEquip(Map<String, Object> commandMap);
     public List<Map> selectListEtcItem(Map<String, Object> commandMap);
+    public List<Map> searchListEvChar();
+
+    public void updateEvChar(Map updateMap);
 
 }

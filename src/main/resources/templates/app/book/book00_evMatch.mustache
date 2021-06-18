@@ -1,0 +1,153 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper-top}}
+
+<style>
+ .row-0 {
+  .make-row();
+  .col-0-0 {
+    .make-md-column(4);
+  }
+  .col-0-1 {
+    .make-md-column(4);
+  }
+  .col-0-2 {
+    .make-md-column(4);
+  }
+}
+
+		 #div1 { margin: 0 auto; height : 300px; width : 650px; padding-top:70px}
+		 #div1div1 { height : 350px; float:left}
+		 #tb1 { width : 300px; height:310px ; border: thick dotted purple; padding : 20px;}
+		 #tb1tr1 {height : 35%;}
+		 #tb1tr2 {height : 20%;}
+		 #tb1tr3 {height : 15%;}
+		 #tb1tr4 {height : 15%;}
+		 #tb1tr4 {height : 15%;}
+		 #tb1 h3 {text-align : center;}
+		 #tb1tr1 h3 {text-align : center; font-size : 35px}
+		 #tb1 td {text-align : center;}
+		 #tb1tr3 button {display : inline-block; width : 100px; }
+		 #tb1tr4 button {display : inline-block; width : 80px; height: 50px; }
+		 #div1div2 { height : 255px; float:left; margin-right: 15px; width : 150px; border: thick dotted red;  margin-top : 8px;}
+		 #tArea1 { width: 100px; height : 100%}
+		 #div1div3 { height : 255px; float:left; margin-left: 15px; width : 150px; border: thick dotted blue;  margin-top : 8px;}
+		 #tArea2 { width: 100px; height : 100%}
+
+</style>
+
+        <div class="container">
+            <div class="row" id="screenHeader">
+                <div id="screenTitle" class="col-lg-6">
+                    <h1>이벤트 대전 - 캐릭터 뽑기</h1>
+                </div>
+                <div id="screenButton" class="col-lg-6">
+                    <a href="#" id="btnSearch" role="button" class="btn btn-primary">캐릭조회</a>
+                    <a href="#" id="btnSave"   role="button" class="btn btn-success">저장</a>
+                    <a href="#" id="btnClear"  role="button" class="btn btn-light">초기화</a>
+                </div>
+            </div>
+
+            <div class="row screenContent1">
+                <div class="col-lg-8">
+
+                    <div id = 'div1'>
+                        <div id = 'div1div2'>
+                            <div style= 'text-align:center; height:20px; font-weight : bold; margin-top : 5px;'>유저 1</div>
+                            <div id ='div1pList' style= 'text-align:center; height:200px; font-weight : bold'></div>
+                            <!--<input id='tArea1' type='textarea'>-->
+                        </div>
+
+                        <div id = 'div1div1'>
+                            <table id='tb1'>
+                                <tbody>
+                                <tr id ='tb1tr1' class = 'tb1tr' >
+                                    <td>
+                                        <h3 id='result'>결과 영역</h3>
+                                    </td>
+                                </tr>
+                                <tr id ='tb1tr2' class = 'tb1tr'>
+                                    <td>
+                                        <h3 id='finalMsg'></h3>
+                                    </td>
+                                </tr>
+                                <tr id ='tb1tr3' class = 'tb1tr'>
+                                    <td>
+                                        <button type="button" id="stInterval" class="btn btn-success">Start</button>
+                                        <button type="button" id="edInterval" class="btn btn-danger">Choose</button>
+                                        <!--
+                                        <button type='button' id='stInterval'>Start</button>
+                                        <button type='button' id='edInterval'>Choose</button>
+                                        -->
+                                    </td>
+                                </tr>
+                                <tr id ='tb1tr4' class = 'tb1tr'>
+                                    <td>
+                                        <button type="button" id='regiBtn1' class="btn btn-warning">Regi 1P</button>
+                                        <button type="button" id='regiBtn2' class="btn btn-warning">Regi 2P</button>
+                                        <button type="button" id='clearBtn' class="btn btn-info">CLEAR</button>
+                                        <!--
+                                        <button type='button' id='regiBtn1'>Regi 1P</button>
+                                        <button type='button' id='regiBtn2'>Regi 2P</button>
+                                        <button type='button' id='clearBtn'>Regi CLEAR</button>
+                                        -->
+                                    </td>
+                                </tr>
+                                <!--
+                                <tr id ='tb1tr5' class = 'tb1tr'>
+                                    <td>
+                                        <input type="radio" name="lottoType" value="C" checked="checked"/> 캐릭터 &nbsp;&nbsp;
+                                        <input type="radio" name="lottoType" value="U" /> 길드원
+                                    </td>
+                                </tr>
+                                -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id = 'div1div3'>
+                            <div style= 'text-align:center; height:20px; font-weight : bold; margin-top : 5px;'>유저 2</div>
+                            <div id ='div2pList' style= 'text-align:center; height:200px; font-weight : bold'></div>
+                            <!--<input id='tArea2' type='textarea'>-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div id="toastGrid"></div>
+                </div>
+            </div>
+            <div class="row EditGridDiv">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+
+{{>layout/main/wrapper-bottom}}
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/app/book/book00_evMatch.js"></script>
+<script>
+	$(document).ready(function(){
+		// send parameter to scirpt for java parameter
+
+        var typeCodeList = {{{typeCodeList}}};
+
+		var param = {
+			// default parameter
+			role     : 'IR01_0100_V01',
+			// session parameter
+			variables : {
+   			        "typeCodeList" : typeCodeList
+				}
+			};
+
+		BOOK00_EVMATCH.initialize(param);
+	});
+</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
+

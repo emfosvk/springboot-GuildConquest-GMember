@@ -1,0 +1,192 @@
+{{>layout/main/header}}
+{{>layout/main/wrapper-top}}
+
+<style>
+ .row-0 {
+  .make-row();
+  .col-0-0 {
+    .make-md-column(4);
+  }
+  .col-0-1 {
+    .make-md-column(4);
+  }
+  .col-0-2 {
+    .make-md-column(4);
+  }
+}
+</style>
+
+        <div class="container">
+            <div class="row" id="screenHeader">
+                <div id="screenTitle" class="col-lg-6">
+                    <h1>데미지 계산기</h1>
+                </div>
+                <div id="screenButton" class="col-lg-6">
+                    <a href="#" id="btnSearch" role="button" class="btn btn-primary">계산</a>
+                    <a href="#" id="btnClear"  role="button" class="btn btn-light">초기화</a>
+                    <a href="#" id="btnSave"   role="button" class="btn btn-success">저장1</a>
+                    <a href="#" id="btnSave2"   role="button" class="btn btn-success">저장2</a>
+                </div>
+            </div>
+
+            <div class="row screenContent1">
+                <div class="col-lg-4">
+                    <table>
+                        <colgroup>
+                            <col width="200px">
+                            <col width="200px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtk1">기본 공격력</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="BASIC_ATK1" id="frmE1_basicAtk1" data-type="text" class="" placeholder="캐릭터 기본 공격력" maxlength="10" style="width: 170px; height: 28px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtk2">전무 공격력</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="BASIC_ATK2" id="frmE1_basicAtk2" data-type="text" class="" placeholder="전무 공격력 수치" maxlength="10" style="width: 170px; height: 28px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtk3">소울웨폰 공격력</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="BASIC_ATK3" id="frmE1_basicAtk3" data-type="text" class="" placeholder="소울웨폰 공격력 수치" maxlength="10" style="width: 170px; height: 28px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtk4">귀걸이 공격력</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="BASIC_ATK4" id="frmE1_basicAtk4" data-type="text" class="" placeholder="귀걸이 공격력 수치" maxlength="10" style="width: 170px; height: 28px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_atk4">장비 공격력 %</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="EQUIP_ATK_P1" id="frmE1_atk4" data-type="text" class="" placeholder="룬, 인챈트, 장비옵션의 합산 %" maxlength="10" style="width: 150px; height: 28px;"><span>&nbsp;%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtkSum">캐릭터 표기 공격력</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="BASIC_ATK_SUM" id="frmE1_basicAtkSum" data-type="text" class="" maxlength="10" style="width: 170px; height: 28px;background-color : #d1d1d1; " readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtkSum">캐릭터 공증 %</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="EQUIP_CDMG_P1" id="frmE1_cdmg1" data-type="text" class="" placeholder="룬, 인챈트, 장비옵션의 합산 %" maxlength="10" style="width: 150px; height: 28px;"><span>&nbsp;%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtkSum">캐릭터 치피 %</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="EQUIP_CDMG_P1" id="frmE1_cdmg1" data-type="text" class="" placeholder="룬, 인챈트, 장비옵션의 합산 %" maxlength="10" style="width: 150px; height: 28px;"><span>&nbsp;%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_basicAtkSum">추가 공격력 증가량</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="EQUIP_CDMG_P1" id="frmE1_cdmg1" data-type="text" class="" placeholder="룬, 인챈트, 장비옵션의 합산 %" maxlength="10" style="width: 170px; height: 28px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                    <table>
+                        <colgroup>
+                            <col width="200px">
+                            <col width="200px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_tmAtkSetCnt">아스칼론 풀셋 사제 수</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="TM_ATK_CNT" id="frmE1_tmAtkSetCnt" data-type="text" class="" maxlength="10" style="width: 50px; height: 28px;"><span> 개 * &nbsp;10%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_tmAtkCnt">마도 아군 공증 수량</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="TM_ATK_CNT" id="frmE1_tmAtkCnt" data-type="text" class="" maxlength="10" style="width: 50px; height: 28px;"><span> 개 * &nbsp;5%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="frmE1_tmCdmgCnt">마도 아군 치피 수량</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="TM_CDMG_CNT" id="frmE1_tmCdmgCnt" data-type="text" class="" maxlength="10" style="width: 50px; height: 28px;"><span> 개 * &nbsp;10%</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                    <div id="toastGrid"></div>
+                    <div>
+                        <a href="#" id="btnNew"    role="button" class="btn btn-info">신규</a>
+                        <a href="#" id="btnDelete" role="button" class="btn btn-danger">삭제</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row EditGridDiv">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+
+{{>layout/main/wrapper-bottom}}
+
+<!-- [START] SCREEN's Scripts -->
+
+<script src="/js/app/book/book00_dmgCalc.js"></script>
+<script>
+	$(document).ready(function(){
+		// send parameter to scirpt for java parameter
+
+        var typeCodeList = {{{typeCodeList}}};
+
+		var param = {
+			// default parameter
+			role     : 'IR01_0100_V01',
+			// session parameter
+			variables : {
+   			        "typeCodeList" : typeCodeList
+				}
+			};
+
+		BOOK00_DMGCALC.initialize(param);
+	});
+</script>
+
+<!-- [E N D] SCREEN's Scripts -->
+
+{{>layout/main/footer}}
+

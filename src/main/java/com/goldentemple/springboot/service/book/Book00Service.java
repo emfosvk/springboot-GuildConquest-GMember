@@ -31,4 +31,26 @@ public class Book00Service extends CustmJavaUtils {
         return book00Mapper.selectListEtcItem(commandMap);
     }
 
+    @Transactional(readOnly = true)
+    public List<Map> searchListEvChar(){
+        //mybatis
+        return book00Mapper.searchListEvChar();
+    }
+
+    public void modifyEvChar(HttpSession session, Map<String, Object> commandMap) throws Exception {
+
+        List<Map> updatedRows = this.getJsonDataToList(commandMap, "updatedRows");
+
+        SessionUser ssuser = (SessionUser) session.getAttribute("user");
+
+        Long userId = ssuser.getId();
+
+        if(checkIsNotNullList(updatedRows)){
+            updatedRows.forEach(updatedMap -> {
+                updatedMap.put("id", userId);
+                book00Mapper.updateEvChar(updatedMap);
+            });
+        }
+    }
+
 }

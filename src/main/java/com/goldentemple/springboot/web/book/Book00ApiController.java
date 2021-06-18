@@ -46,5 +46,42 @@ public class Book00ApiController {
         return rtnMap;
     }
 
+    @GetMapping("/book/api/searchListEvChar.api")
+    public Map<String, Object> searchCode(ToastGridParamDto searchMap){
+
+        List<Map> searchResult = book00Service.searchListEvChar();
+
+        HashMap<String, Object> rtnMap   = new HashMap<String, Object>();
+        HashMap<String, Object> dataMap  = new HashMap<String, Object>();
+        HashMap<String, Object> pageInfo = new HashMap<String, Object>();
+
+        if(searchResult.size() > 0){
+            pageInfo.put("page", searchMap.getPage());
+            pageInfo.put("totalCount", searchResult.get(0).get("totalcount"));
+        } else {
+            pageInfo.put("page", 1);
+            pageInfo.put("totalCount", 0);
+        }
+
+        dataMap.put("contents"  , searchResult);
+        dataMap.put("pagination", pageInfo);
+
+        rtnMap.put("result", true);
+        rtnMap.put("data", dataMap);
+
+        return rtnMap;
+    }
+
+    @PostMapping("/book/api/modifyEvChar.api")
+    public Map<String, Object> modifyEvChar(HttpSession session, @RequestParam Map<String, Object> commandMap) throws Exception{
+
+        book00Service.modifyEvChar(session, commandMap);
+
+        HashMap<String, Object> rtnMap   = new HashMap<String, Object>();
+
+        rtnMap.put("result", true);
+
+        return rtnMap;
+    }
 
 }

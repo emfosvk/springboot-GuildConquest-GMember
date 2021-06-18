@@ -45,4 +45,48 @@ public class Book00Controller extends CustmJavaUtils {
 
         return "app/book/book00_charitem";
     }
+
+    @GetMapping("/vw/book00_dmgCalc.vw")
+    public String book00_dmgCalc(Model model, @LoginUser SessionUser user){
+        //model.addAttribute("posts", postsService.findAllDesc(null));
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        if(user != null){
+            //아래 정보는 인터셉터로 뺴버림.
+            //모든 url Path 리턴될 예정.
+            //model.addAttribute("userInfo", getUserInfo(user));
+        }
+
+        ToastGridParamDto searchMap = new ToastGridParamDto();
+        List<Map> searchResult = (List<Map>) comn00Service.selectListClassForDropDown();
+
+        JSONArray searchResultJSON = convertListToJson(searchResult);
+        model.addAttribute("typeCodeList", searchResultJSON);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return "app/book/book00_dmgCalc";
+    }
+
+    @GetMapping("/vw/book00_evMatch.vw")
+    public String book00_evMatch(Model model, @LoginUser SessionUser user){
+        //model.addAttribute("posts", postsService.findAllDesc(null));
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        if(user != null){
+            //아래 정보는 인터셉터로 뺴버림.
+            //모든 url Path 리턴될 예정.
+            //model.addAttribute("userInfo", getUserInfo(user));
+        }
+
+        ToastGridParamDto searchMap = new ToastGridParamDto();
+        List<Map> searchResult = (List<Map>) comn00Service.selectListClassForDropDown();
+
+        JSONArray searchResultJSON = convertListToJson(searchResult);
+        model.addAttribute("typeCodeList", searchResultJSON);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return "app/book/book00_evMatch";
+    }
 }
